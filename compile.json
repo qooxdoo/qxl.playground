@@ -1,0 +1,35 @@
+{
+   "environment": {
+    "qx.debug" : true,
+    "qx.debug.ui.queue" : true,
+    "qx.nativeScrollBars" : true,
+    "qx.allowUrlSettings" : true,
+    "qx.mobile.emulatetouch" : true,
+    "qx.icontheme": ["Tango", "Oxygen"]
+   },
+	"applications": [
+		{
+			"class": "qxl.playground.Application",
+			"theme": "qxl.playground.theme.Theme",
+			"name": "playground",
+			"title": "Playground"
+		}
+	],
+	/** Targets */
+	"targets": [
+		{
+			"type": "source",
+			"outputPath": "source-output"
+		},
+		{
+			"type": "build",
+			"outputPath": "build-output"
+		}
+	],
+	"locales": [
+		 "en", "de", "ro", "sv", "cs"
+	],
+	"serve": {
+	   "listenPort": 8080
+	}
+}
