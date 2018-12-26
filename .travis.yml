@@ -6,6 +6,7 @@ before_install:
 
 script:
   - qx compile --target=build -v
+  - cp build-output/playground/loading.gif build-output/
   
 
 deploy:
