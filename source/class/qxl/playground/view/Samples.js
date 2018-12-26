@@ -22,6 +22,10 @@
  * @ignore(require)
  * @ignore(ace)
  * @asset(qxl/playground/*)
+ * @asset(qx/icon/${qx.icontheme}/16/actions/document-save.png)
+ * @asset(qx/icon/${qx.icontheme}/16/places/user-trash.png)
+ * @asset(qx/icon/${qx.icontheme}/16/actions/document-save-as.png)
+ * @asset(qx/icon/${qx.icontheme}/16/actions/format-text-direction-ltr.png)
  */
 qx.Class.define("qxl.playground.view.Samples",
 {

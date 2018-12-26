@@ -19,8 +19,17 @@
 /**
  * The playground toolbar containing all buttons and menus.
  *
- * @asset(qxl/playground/images/*)
- */
+ *  @asset(qxl/playground/images/*)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/media-playback-start.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/edit-copy.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/check-spelling.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/apps/utilities-log-viewer.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/bookmark-new.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/help-contents.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/help-about.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/application-exit.png)
+ *  @asset(qx/icon/${qx.icontheme}/22/actions/media-seek-forward.png)
+*/
 qx.Class.define("qxl.playground.view.Toolbar",
 {
   extend : qx.ui.toolbar.ToolBar,

@@ -5,14 +5,22 @@
     "qx.nativeScrollBars" : true,
     "qx.allowUrlSettings" : true,
     "qx.mobile.emulatetouch" : true,
-    "qx.icontheme": ["Tango", "Oxygen"]
+    "qx.icontheme": ["Tango"]
    },
 	"applications": [
 		{
 			"class": "qxl.playground.Application",
 			"theme": "qxl.playground.theme.Theme",
 			"name": "playground",
-			"title": "Playground"
+			"title": "Playground",
+			"include": [
+				"qx.*"
+			],
+			"exclude": [
+				"qx.test.*",
+				"qx.module.Blocker",
+				"qx.module.Placement"
+  		  ]
 		}
 	],
 	/** Targets */

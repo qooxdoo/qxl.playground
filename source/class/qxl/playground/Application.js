@@ -23,7 +23,9 @@
  * Playground application, which allows for source code editing and live
  * previews of a simple custom application.
  *
- * @asset(qx/icon/${qx.icontheme}/*)
+ * @ignore(location.*)
+ * @asset(qx/icon/Tango/22/*)
+ * 
  */
 qx.Class.define("qxl.playground.Application",
 {
@@ -573,11 +575,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the api viewer.
      */
     __onApiOpen : function() {
-      window.open(
-        "http://demo.qooxdoo.org/" +
-        qx.core.Environment.get("qx.version") +
-        "/apiviewer/"
-      );
+      window.open("http://www.qooxdoo.org/qxl.apiviewer/");
     },
 
 
@@ -585,9 +583,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the manual.
      */
     __onManualOpen : function() {
-      window.open(
-        "http://manual.qooxdoo.org/" + qx.core.Environment.get("qx.version")
-      );
+      window.open("http://www.qooxdoo.org/devel/");
     },
 
 
@@ -595,11 +591,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the demo browser.
      */
     __onDemoBrowser : function() {
-      window.open(
-        "http://demo.qooxdoo.org/" +
-        qx.core.Environment.get("qx.version") +
-        "/demobrowser/"
-      );
+      window.open("http://www.qooxdoo.org/qxl.demobrowser/");
     },
 
     // ***************************************************
