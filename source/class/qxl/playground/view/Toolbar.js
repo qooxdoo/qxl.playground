@@ -123,7 +123,7 @@ qx.Class.define("qxl.playground.view.Toolbar",
       this.tr("Demo Browser"), "icon/22/actions/application-exit.png"
     );
     this.add(demoBrowserButton);
-    demoBrowserButton.setToolTipText(this.tr("Open the qooxdoo Demo Browser"));
+    demoBrowserButton.setToolTipText(this.tr("Open the qooxdoo Widget Browser"));
     demoBrowserButton.addListener("execute", function() {
       this.fireEvent("openDemoBrowser");
     }, this);

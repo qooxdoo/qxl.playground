@@ -591,7 +591,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the demo browser.
      */
     __onDemoBrowser : function() {
-      window.open("http://www.qooxdoo.org/qxl.demobrowser/");
+      window.open("http://www.qooxdoo.org/qxl.widgetbrowser/");
     },
 
     // ***************************************************
