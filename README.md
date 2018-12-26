@@ -3,6 +3,10 @@
 A playground for application coding.
 This application features a code editor and a live preview of the application.
 
+## Online version
+
+http://www.qooxdoo.org/qxl.playground/ 
+
 ## Developing Playground
 Clone this repo and compile it:
 
