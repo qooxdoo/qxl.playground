@@ -12,12 +12,15 @@
     }
 
   </style>
+  
+  ${preBootJs}
+  <script type="text/javascript" src="${appPath}boot.js"></script>
 
 </head>
 <body>
   <div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;">
     <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; width: 50px; height: 15px; text-align: center;">
-      <img src="loading.gif">
+      <img src="${appPath}loading.gif">
     </div>
   </div>
 
@@ -500,7 +503,6 @@ this.getRoot().add(list, {left: 0, right: 0});
 var controller = new qx.data.controller.List(null, list, "title");
 
 store.bind("model", controller, "model");</textarea>
-
 
 </body>
 </html>

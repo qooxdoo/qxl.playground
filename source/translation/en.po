@@ -343,3 +343,11 @@ msgstr ""
 #: qx/util/Validate.js:314
 msgid "%1 does not fit %2."
 msgstr ""
+
+#: qxl/playground/view/Toolbar.js:123
+msgid "Widget Browser"
+msgstr ""
+
+#: qxl/playground/view/Toolbar.js:126
+msgid "Open the qooxdoo Widget Browser"
+msgstr ""
