@@ -1,12 +1,14 @@
 {
-   "environment": {
-    "qx.debug" : true,
-    "qx.debug.ui.queue" : true,
-    "qx.nativeScrollBars" : true,
-    "qx.allowUrlSettings" : true,
-    "qx.mobile.emulatetouch" : true,
-    "qx.icontheme": ["Tango"]
-   },
+	"environment": {
+		"qx.debug": true,
+		"qx.debug.ui.queue": true,
+		"qx.nativeScrollBars": true,
+		"qx.allowUrlSettings": true,
+		"qx.mobile.emulatetouch": true,
+		"qx.icontheme": [
+			"Tango"
+		]
+	},
 	"applications": [
 		{
 			"class": "qxl.playground.Application",
@@ -20,24 +22,28 @@
 				"qx.test.*",
 				"qx.module.Blocker",
 				"qx.module.Placement"
-  		  ]
+			]
 		}
 	],
 	/** Targets */
 	"targets": [
 		{
 			"type": "source",
-			"outputPath": "source-output"
+			"outputPath": "compiled/source"
 		},
 		{
 			"type": "build",
-			"outputPath": "build-output"
+			"outputPath": "compiled/build"
 		}
 	],
 	"locales": [
-		 "en", "de", "ro", "sv", "cs"
+		"en",
+		"de",
+		"ro",
+		"sv",
+		"cs"
 	],
 	"serve": {
-	   "listenPort": 8080
+		"listenPort": 8080
 	}
 }
