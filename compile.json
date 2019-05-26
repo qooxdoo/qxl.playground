@@ -15,6 +15,7 @@
 			"theme": "qxl.playground.theme.Theme",
 			"name": "playground",
 			"title": "Playground",
+            "bootPath": "source/boot",
 			"include": [
 				"qx.*"
 			],
