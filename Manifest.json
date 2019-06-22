@@ -17,7 +17,7 @@
         "email": "Henner DOT Kollmann AT gmx DOT de"
       }
     ],
-    "version": "1.0.0-beta"
+    "version": "1.0.0-beta.0"
   },
   "provides": {
     "namespace": "qxl.playground",
@@ -26,20 +26,20 @@
     "resource": "source/resource",
     "translation": "source/translation",
     "application": {
-			"class": "qxl.playground.Application",
-			"theme": "qxl.playground.theme.Theme",
-			"name": "playground",
-			"title": "Playground",
-            "bootPath": "source/boot",
-			"include": [
-				"qx.*"
-			],
-			"exclude": [
-				"qx.test.*",
-				"qx.module.Blocker",
-				"qx.module.Placement"
-			]
-		}
+      "class": "qxl.playground.Application",
+      "theme": "qxl.playground.theme.Theme",
+      "name": "playground",
+      "title": "Playground",
+      "bootPath": "source/boot",
+      "include": [
+        "qx.*"
+      ],
+      "exclude": [
+        "qx.test.*",
+        "qx.module.Blocker",
+        "qx.module.Placement"
+      ]
+    }
   },
   "requires": {
     "@qooxdoo/compiler": "^1.0.0-beta",
