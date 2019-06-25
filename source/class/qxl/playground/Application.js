@@ -575,7 +575,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the api viewer.
      */
     __onApiOpen : function() {
-      window.open(qx.core.Environment.get((qx.core.Environment.get("qx.serve.localpath") || "https://www.qooxdoo.org/") + "qxl.apiviewer/");
+      window.open(qx.core.Environment.get(qx.core.Environment.get("qx.serve.localpath") || "https://www.qooxdoo.org/") + "qxl.apiviewer/");
     },
 
 
