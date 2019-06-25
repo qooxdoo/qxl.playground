@@ -13,7 +13,7 @@ Clone this repo and compile it:
 ```
     $ git clone https://github.com/qooxdoo/qxl.playground
     $ cd qxl.playground
-    $ qx contrib install
+    $ qx package install
     $ npm install
     $ qx serve
 ```
