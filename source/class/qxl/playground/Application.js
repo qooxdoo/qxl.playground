@@ -575,7 +575,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the api viewer.
      */
     __onApiOpen : function() {
-      window.open((qx.core.Environment.get("qx.serve.localpath") || "https://www.qooxdoo.org/") + "apps/apiviewer/");
+      window.open((qx.core.Environment.get("qx.serve.appspath") || "https://www.qooxdoo.org/qxl.") + "apiviewer/");
     },
 
 
@@ -583,7 +583,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the manual.
      */
     __onManualOpen : function() {
-      window.open((qx.core.Environment.get("qx.serve.localpath") || "https://www.qooxdoo.org/") +  "docs/");
+      window.open((qx.core.Environment.get("qx.serve.docspath") || "https://www.qooxdoo.org/") +  "docs");
     },
 
 
@@ -591,7 +591,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the demo browser.
      */
     __onDemoBrowser : function() {
-      window.open((qx.core.Environment.get("qx.serve.localpath") || "https://www.qooxdoo.org/") +  "apps/widgetbrowser/");
+      window.open((qx.core.Environment.get("qx.serve.appspath") || "https://www.qooxdoo.org/qxl.") +  "widgetbrowser/");
     },
 
     // ***************************************************
