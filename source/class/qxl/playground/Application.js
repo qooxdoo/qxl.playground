@@ -441,7 +441,7 @@ qx.Class.define("qxl.playground.Application",
      */
     __onSaveAs : function() {
       // ask the user for a new name for the property
-      var name = prompt(this.tr("Please enter a name"), ""); // empty value string of IE
+      var name = window.prompt(this.tr("Please enter a name"), ""); // empty value string of IE
       if (!name) {
         return;
       }
@@ -449,7 +449,7 @@ qx.Class.define("qxl.playground.Application",
       var samples = this.__store.getModel();
       for (var i = 0; i < samples.length; i++) {
         if (samples.getItem(i).getName() == name) {
-          if (confirm(this.tr("Sample already exists. Do you want to overwrite?"))) {
+          if (window.confirm(this.tr("Sample already exists. Do you want to overwrite?"))) {
             this.__onSave();
           }
           return;
@@ -496,7 +496,7 @@ qx.Class.define("qxl.playground.Application",
       // if we have a sample and its not a static one
       if (current || current.getCategory() != "static") {
         // ask the user for a new name
-        var name = prompt(this.tr("Please enter a name"), current.getName());
+        var name = window.prompt(this.tr("Please enter a name"), current.getName());
         if (!name) {
           return;
         }
@@ -724,7 +724,7 @@ qx.Class.define("qxl.playground.Application",
       var codeJson =
         '{"code":' + '"' + encodeURIComponent(code) + '", "mode":"' + this.__mode + '"}';
       if (qx.core.Environment.get("engine.name") == "mshtml" && codeJson.length > 1300) {
-        if (!this.__ignoreSaveFaults && confirm(
+        if (!this.__ignoreSaveFaults && window.confirm(
           this.tr("Cannot append sample code to URL, as it is too long. " +
                   "Disable this warning in the future?"))
         ) {
@@ -749,7 +749,7 @@ qx.Class.define("qxl.playground.Application",
     __discardChanges : function() {
       var userCode = this.__editor.getCode();
       if (userCode && this.__isCodeNotEqual(userCode, this.getOriginCode())) {
-        if (!confirm(this.tr("Tap OK to discard your changes."))) {
+        if (!window.confirm(this.tr("Tap OK to discard your changes."))) {
           return true;
         }
       }
@@ -798,6 +798,7 @@ qx.Class.define("qxl.playground.Application",
      */
     __updatePlayground : function()
     {
+      var exc;
       this.__log.clear();
       this.__playArea.reset(this.__beforeReg, this.__afterReg, this.__oldCode);
 
@@ -818,7 +819,7 @@ qx.Class.define("qxl.playground.Application",
         this.__oldCode = code;
         this.fun = qx.event.GlobalError.observeMethod(new Function(code));
       } catch(ex) {
-        var exc = ex;
+        exc = ex;
       }
 
       // run the code
@@ -832,7 +833,7 @@ qx.Class.define("qxl.playground.Application",
         qx.ui.core.queue.Manager.flush();
         this.__afterReg = qx.lang.Object.clone(qx.core.ObjectRegistry.getRegistry());
       } catch(ex) {
-        var exc = ex;
+        exc = ex;
       }
 
       // store the new standalone app if available

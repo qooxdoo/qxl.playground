@@ -45,6 +45,9 @@
 		"sv",
 		"cs"
 	],
+	"sass": {
+	   "compiler": "legacy"
+	},
 	"serve": {
 		"listenPort": 8080
 	}
