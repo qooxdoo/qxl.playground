@@ -1,0 +1,38 @@
+{
+  "version": 3,
+  "sources": [
+    "/home/travis/build/qooxdoo/qxl.playground/source/class/qxl/playground/theme/Appearance.js"
+  ],
+  "names": [
+    "qx",
+    "Bootstrap",
+    "executePendingDefers",
+    "$$dbClassInfo",
+    "Theme",
+    "define",
+    "extend",
+    "theme",
+    "indigo",
+    "Appearance",
+    "appearances",
+    "style",
+    "states",
+    "font",
+    "textColor",
+    "backgroundColor",
+    "decorator",
+    "padding",
+    "include",
+    "alias",
+    "superStyles",
+    "checked",
+    "marginBottom",
+    "marginTop",
+    "qxl",
+    "playground"
+  ],
+  "mappings": ";;;;;;;;;;;;AAAAA,EAAAA,EAAE,CAACC,SAAH,CAAaC,oBAAb,CAAkCC,aAAlC;;AAAA;;;;;;;;;;;;;;;;;;AAiBA;;;AAGAH,EAAAA,EAAE,CAACI,KAAH,CAASC,MAAT,CAAgB,iCAAhB,EACA;AACEC,IAAAA,MAAM,EAAGN,EAAE,CAACO,KAAH,CAASC,MAAT,CAAgBC,UAD3B;AAGEC,IAAAA,WAAW,EACX;AACE,oBACA;AACEC,QAAAA,KAAK,EAAG,eAASC,MAAT,EACR;AACE,iBAAO;AACLC,YAAAA,IAAI,EAAG,UADF;AAELC,YAAAA,SAAS,EAAG,eAFP;AAGLC,YAAAA,eAAe,EAAE,0BAHZ;AAILC,YAAAA,SAAS,EAAE,YAJN;AAKLC,YAAAA,OAAO,EAAG,CAAC,EAAD,EAAK,EAAL,EAAS,CAAT,EAAY,EAAZ;AALL,WAAP;AAOD;AAVH,OAFF;AAeE,oBACA;AACEC,QAAAA,OAAO,EAAG,qBADZ;AAEEC,QAAAA,KAAK,EAAG,qBAFV;AAIER,QAAAA,KAAK,EAAG,eAASC,MAAT,EAAiBQ,WAAjB,EACR;AACE,iBAAO;AACLP,YAAAA,IAAI,EAAED,MAAM,CAACS,OAAP,GAAiB,MAAjB,GAA0B,SAD3B;AAELP,YAAAA,SAAS,EAAE,OAFN;AAGLE,YAAAA,SAAS,EAAGJ,MAAM,CAACS,OAAP,GAAiB,iBAAjB,GAAqC,IAH5C;AAILJ,YAAAA,OAAO,EAAE,CAAC,CAAD,EAAI,EAAJ,EAAQ,CAAR,EAAW,EAAX,CAJJ;AAKLK,YAAAA,YAAY,EAAE,CAAC,CALV;AAMLC,YAAAA,SAAS,EAAE;AANN,WAAP;AAQD;AAdH,OAhBF;AAkCE,yBAAoB;AAClBZ,QAAAA,KAAK,EAAG,iBAAW;AACjB,iBAAO;AACLI,YAAAA,eAAe,EAAE;AADZ,WAAP;AAGD;AALiB,OAlCtB;AA2CE,qBACA;AACEG,QAAAA,OAAO,EAAG,MADZ;AAEEC,QAAAA,KAAK,EAAG,MAFV;AAIER,QAAAA,KAAK,EAAG,eAASC,MAAT,EAAiB;AACvB,iBAAO;AACLI,YAAAA,SAAS,EAAE,oBADN;AAELC,YAAAA,OAAO,EAAG;AAFL,WAAP;AAID;AATH;AA5CF;AAJF,GADA;AApBAO,EAAAA,GAAG,CAACC,UAAJ,CAAelB,KAAf,CAAqBE,UAArB,CAAgCN,aAAhC,GAAgDA,aAAhD",
+  "sourcesContent": [
+    "/* ************************************************************************\n\n   qooxdoo - the new era of web development\n\n   http://qooxdoo.org\n\n   Copyright:\n     2004-2011 1&1 Internet AG, Germany, http://www.1und1.de\n\n   License:\n     MIT: https://opensource.org/licenses/MIT\n     See the LICENSE file in the project's top-level directory for details.\n\n   Authors:\n     * Martin Wittemann (martinwittemann)\n\n************************************************************************ */\n/**\n * A custom apperance theme for the qxl.playground.\n */\nqx.Theme.define(\"qxl.playground.theme.Appearance\",\n{\n  extend : qx.theme.indigo.Appearance,\n\n  appearances :\n  {\n    \"app-header\" :\n    {\n      style : function(states)\n      {\n        return {\n          font : \"headline\",\n          textColor : \"text-selected\",\n          backgroundColor: \"background-selected-dark\",\n          decorator: \"app-header\",\n          padding : [10, 10, 0, 10]\n        };\n      }\n    },\n\n    \"modeButton\" :\n    {\n      include : \"tabview-page/button\",\n      alias : \"tabview-page/button\",\n\n      style : function(states, superStyles)\n      {\n        return {\n          font: states.checked ? \"bold\" : \"default\",\n          textColor: \"white\",\n          decorator : states.checked ? \"mode-select-tab\" : null,\n          padding: [2, 15, 6, 15],\n          marginBottom: -5,\n          marginTop: 8\n        };\n      }\n    },\n\n\n    \"website-content\" : {\n      style : function() {\n        return {\n          backgroundColor: \"light-background\"\n        }\n      }\n    },\n\n\n    \"sample-list\" :\n    {\n      include : \"list\",\n      alias : \"list\",\n\n      style : function(states) {\n        return {\n          decorator: \"separator-vertical\",\n          padding : 0\n        };\n      }\n    }\n  }\n});"
+  ]
+}

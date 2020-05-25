@@ -1,0 +1,31 @@
+{
+  "version": 3,
+  "sources": [
+    "/home/travis/build/qooxdoo/qxl.playground/source/class/qxl/playground/theme/Decoration.js"
+  ],
+  "names": [
+    "qx",
+    "Bootstrap",
+    "executePendingDefers",
+    "$$dbClassInfo",
+    "Theme",
+    "define",
+    "extend",
+    "theme",
+    "indigo",
+    "Decoration",
+    "aliases",
+    "decoration",
+    "decorations",
+    "include",
+    "style",
+    "color",
+    "backgroundColor",
+    "qxl",
+    "playground"
+  ],
+  "mappings": ";;;;;;;;;;;;AAAAA,EAAAA,EAAE,CAACC,SAAH,CAAaC,oBAAb,CAAkCC,aAAlC;;AAAA;;;;;;;;;;;;;;;;;AAmBAH,EAAAA,EAAE,CAACI,KAAH,CAASC,MAAT,CAAgB,iCAAhB,EACA;AACEC,IAAAA,MAAM,EAAGN,EAAE,CAACO,KAAH,CAASC,MAAT,CAAgBC,UAD3B;AAGEC,IAAAA,OAAO,EAAG;AACRC,MAAAA,UAAU,EAAG;AADL,KAHZ;AAOEC,IAAAA,WAAW,EACX;AACE,yBAAoB;AAClBC,QAAAA,OAAO,EAAG,yBADQ;AAGlBC,QAAAA,KAAK,EACL;AACEC,UAAAA,KAAK,EAAG,iBADV;AAEEC,UAAAA,eAAe,EAAE;AAFnB;AAJkB;AADtB;AARF,GADA;AAnBAC,EAAAA,GAAG,CAACC,UAAJ,CAAeX,KAAf,CAAqBE,UAArB,CAAgCN,aAAhC,GAAgDA,aAAhD",
+  "sourcesContent": [
+    "/* ************************************************************************\n\n   qooxdoo - the new era of web development\n\n   http://qooxdoo.org\n\n   Copyright:\n     2004-2011 1&1 Internet AG, Germany, http://www.1und1.de\n\n   License:\n     MIT: https://opensource.org/licenses/MIT\n     See the LICENSE file in the project's top-level directory for details.\n\n   Authors:\n   * Martin Wittemann (martinwittemann)\n\n************************************************************************* */\n\n\nqx.Theme.define(\"qxl.playground.theme.Decoration\",\n{\n  extend : qx.theme.indigo.Decoration,\n\n  aliases : {\n    decoration : \"qx/decoration/Simple\"\n  },\n\n  decorations :\n  {\n    \"mode-select-tab\" : {\n      include : \"tabview-page-button-top\",\n\n      style :\n      {\n        color : \"highlight-shade\",\n        backgroundColor: \"background-selected\"\n      }\n    }\n  }\n});\n"
+  ]
+}
