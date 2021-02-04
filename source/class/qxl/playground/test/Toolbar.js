@@ -23,8 +23,7 @@ qx.Class.define("qxl.playground.test.Toolbar",
   {
     __toolbar : null,
 
-    setUp : function()
-    {
+    setUp : function() {
       this.__toolbar = new qxl.playground.view.Toolbar(["one", "two", "three"]);
       this.getRoot().add(this.__toolbar);
     },
@@ -35,8 +34,7 @@ qx.Class.define("qxl.playground.test.Toolbar",
     },
 
 
-    testEvents : function()
-    {
+    testEvents : function() {
       var self = this;
       // test run event
       this.assertEventFired(this.__toolbar, "run", function() {

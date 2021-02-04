@@ -24,8 +24,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
   extend : qx.ui.container.Composite,
 
 
-  construct : function()
-  {
+  construct : function() {
     var layout = new qx.ui.layout.VBox();
     layout.setSeparator("separator-vertical");
     this.base(arguments, layout);
@@ -62,7 +61,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
         maxButton.setToolTipText(this.tr("Maximize"));
       }
       this.fireEvent("toggleMaximize");
-    }, this)
+    }, this);
 
     // combine all parts for the caption
     this._caption.add(this.__captionLabel);
@@ -107,8 +106,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
     /**
      * Initializes the playarea.
      */
-    init : function()
-    {
+    init : function() {
       if (this._initialized) {
         return;
       }
@@ -121,9 +119,13 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
       this._playRoot._setLayout(new qx.ui.layout.Canvas());
 
       var self = this;
-      this._playRoot.getLayoutParent = function() { return self.__playField; };
+      this._playRoot.getLayoutParent = function() {
+ return self.__playField; 
+};
       this.__playField.getChildren = this.__playField._getChildren =
-        function() { return [self._playRoot]; };
+        function() {
+ return [self._playRoot]; 
+};
 
       // copy the initial size which is availbale due to the flush at the beginning
       this._playRoot.setMinWidth(this.__playField.getBounds().width);
@@ -184,8 +186,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
 
       var ch = this._playRoot.getChildren();
       var i = ch.length;
-      while(i--)
-      {
+      while (i--) {
         if (ch[i]) {
           ch[i].destroy();
         }
@@ -224,8 +225,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
      * Returns the used application.
      * @return {qx.application.Standalone} A clone of the playground app.
      */
-    getApp : function()
-    {
+    getApp : function() {
       return this._playApp;
     }
   },
@@ -238,8 +238,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
    *****************************************************************************
    */
 
-  destruct : function()
-  {
+  destruct : function() {
     this._disposeObjects(
       "__captionLabel", "__playField", "_dummy", "_playRoot", "_playApp"
     );

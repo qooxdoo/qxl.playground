@@ -22,8 +22,7 @@ qx.Class.define("qxl.playground.view.Header",
 {
   extend : qx.ui.container.Composite,
 
-  construct : function()
-  {
+  construct : function() {
     this.base(arguments, new qx.ui.layout.HBox());
     this.setAppearance("app-header");
 
@@ -98,7 +97,7 @@ qx.Class.define("qxl.playground.view.Header",
           var button = this.__buttons[i];
           break;
         }
-      };
+      }
 
       var label = value ? this.tr("Mobile") : this.tr("Mobile (Webkit only)");
       button.setEnabled(value);

@@ -27,6 +27,8 @@
  * @asset(qx/icon/Tango/22/*)
  * 
  */
+ /*  eslint-disable no-alert */
+
 qx.Class.define("qxl.playground.Application",
 {
   extend : qx.application.Standalone,
@@ -108,8 +110,7 @@ qx.Class.define("qxl.playground.Application",
      * This method contains the initial application code and gets called
      * during startup of the application.
      */
-    main : function()
-    {
+    main : function() {
       // Call super class
       this.base(arguments);
 
@@ -140,7 +141,7 @@ qx.Class.define("qxl.playground.Application",
       this.__toolbar.addListener("shortenUrl", this.__onUrlShorten, this);
       this.__toolbar.addListener("openApi", this.__onApiOpen, this);
       this.__toolbar.addListener("openManual", this.__onManualOpen, this);
-      this.__toolbar.addListener("openDemoBrowser",this.__onDemoBrowser,this);
+      this.__toolbar.addListener("openDemoBrowser", this.__onDemoBrowser, this);
 
       // mainsplit, contains the editor splitpane and the info splitpane
       this.__mainsplit = new qx.ui.splitpane.Pane("horizontal");
@@ -173,7 +174,7 @@ qx.Class.define("qxl.playground.Application",
       // initialize custom samples
       this.__store = new qx.data.store.Offline("qooxdoo-playground-samples");
       // if the local storage is not empty
-      if (this.__store.getModel() != null) {
+      if (this.__store.getModel() !== null) {
         // use the stored array to initialize the built in samples
         this.__samples = new qxl.playground.Samples(this.__store.getModel());
       } else {
@@ -320,7 +321,6 @@ qx.Class.define("qxl.playground.Application",
           this.__websiteContent.show();
         }
       }
-
     },
 
     /**
@@ -454,7 +454,7 @@ qx.Class.define("qxl.playground.Application",
           }
           return;
         }
-      };
+      }
       // create new sample
       var data = {
         name: name,
@@ -496,7 +496,7 @@ qx.Class.define("qxl.playground.Application",
       // if we have a sample and its not a static one
       if (current || current.getCategory() != "static") {
         // ask the user for a new name
-        var name = window.prompt(this.tr("Please enter a name"), current.getName());
+      var name = window.prompt(this.tr("Please enter a name"), current.getName());
         if (!name) {
           return;
         }
@@ -583,7 +583,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the manual.
      */
     __onManualOpen : function() {
-      window.open((qx.core.Environment.get("qx.serve.docspath") || "https://www.qooxdoo.org/") +  "docs");
+      window.open((qx.core.Environment.get("qx.serve.docspath") || "https://www.qooxdoo.org/") + "docs");
     },
 
 
@@ -591,7 +591,7 @@ qx.Class.define("qxl.playground.Application",
      * Handler for opening the demo browser.
      */
     __onDemoBrowser : function() {
-      window.open((qx.core.Environment.get("qx.serve.appspath") || "https://www.qooxdoo.org/qxl.") +  "widgetbrowser/");
+      window.open((qx.core.Environment.get("qx.serve.appspath") || "https://www.qooxdoo.org/qxl.") + "widgetbrowser/");
     },
 
     // ***************************************************
@@ -600,22 +600,19 @@ qx.Class.define("qxl.playground.Application",
     /**
      * Back button and bookmark support
      */
-    __initBookmarkSupport : function()
-    {
+    __initBookmarkSupport : function() {
       this.__history = qx.bom.History.getInstance();
       this.__history.addListener("changeState", this.__onHistoryChanged, this);
 
       // Handle bookmarks
       var state = this.__history.getState();
-      var name = state.replace(/_/g, " ");
 
       var code = "";
 
       // checks if the state corresponds to a sample. If yes, the application
       // will be initialized with the selected sample
-      if (state && this.__samples.isAvailable(state))
-      {
-        var sample = this.__samples.get(state);
+      if (state && this.__samples.isAvailable(state)) {
+        let sample = this.__samples.get(state);
         this.setCurrentSample(sample);
         return;
 
@@ -632,13 +629,13 @@ qx.Class.define("qxl.playground.Application",
         } else {
           this.setMode("ria");
         }
-        var sample = this.__samples.getFirstSample(this.__mode);
+        let sample = this.__samples.getFirstSample(this.__mode);
         this.setCurrentSample(sample);
         return;
 
       // if there is a state given
       } else if (state && state.charAt(0) == "{") {
-        var name = this.tr("Custom Code");
+        let name = this.tr("Custom Code");
         code = this.__parseURLCode(state);
         // need to get the code from the editor in case he changes something
         // in the code
@@ -664,13 +661,11 @@ qx.Class.define("qxl.playground.Application",
      * Handler for changes of the history.
      * @param e {qx.event.type.Data} Data event containing the history changes.
      */
-    __onHistoryChanged : function(e)
-    {
+    __onHistoryChanged : function(e) {
       var state = e.getData();
 
       // is a sample name given
-      if (this.__samples.isAvailable(state))
-      {
+      if (this.__samples.isAvailable(state)) {
         var sample = this.__samples.get(state);
         if (this.__isCodeNotEqual(sample.getCode(), this.__editor.getCode())) {
           this.setCurrentSample(sample);
@@ -694,8 +689,7 @@ qx.Class.define("qxl.playground.Application",
      * @param state {String} The given state of the browsers history.
      * @return {String} A valid code snippet.
      */
-    __parseURLCode : function(state)
-    {
+    __parseURLCode : function(state) {
       try {
         var data = qx.lang.Json.parse(state);
         // change the mode in case a different mode is given
@@ -722,14 +716,15 @@ qx.Class.define("qxl.playground.Application",
      */
     __addCodeToHistory : function(code) {
       var codeJson =
-        '{"code":' + '"' + encodeURIComponent(code) + '", "mode":"' + this.__mode + '"}';
+        /* eslint-disable-next-line no-useless-concat */
+        "{\"code\":" + "\"" + encodeURIComponent(code) + "\", \"mode\":\"" + this.__mode + "\"}";
       if (qx.core.Environment.get("engine.name") == "mshtml" && codeJson.length > 1300) {
         if (!this.__ignoreSaveFaults && window.confirm(
           this.tr("Cannot append sample code to URL, as it is too long. " +
                   "Disable this warning in the future?"))
         ) {
           this.__ignoreSaveFaults = true;
-        };
+        }
         return;
       }
       this.__history.addToHistory(codeJson);
@@ -763,8 +758,7 @@ qx.Class.define("qxl.playground.Application",
      * @param code2 {String} The second code to compare.
      * @return {Boolean} true, if the code is equal.
      */
-    __isCodeNotEqual : function(code1, code2)
-    {
+    __isCodeNotEqual : function(code1, code2) {
       if (qx.core.Environment.get("engine.name") == "opera") {
         code1 = code1.replace(/\r?\n/g, "\n");
         code2 = code2.replace(/\r?\n/g, "\n");
@@ -796,8 +790,7 @@ qx.Class.define("qxl.playground.Application",
     /**
      * Updates the qxl.playground.
      */
-    __updatePlayground : function()
-    {
+    __updatePlayground : function() {
       var exc;
       this.__log.clear();
       this.__playArea.reset(this.__beforeReg, this.__afterReg, this.__oldCode);
@@ -809,16 +802,17 @@ qx.Class.define("qxl.playground.Application",
       var code = this.__editor.getCode();
       // special replacement for unicode "zero width space" [BUG #3635]
       code = code.replace("\u200b", "");
-      code = 'this.info("' + this.tr("Starting application").toString() +
-        " '" + this.getName() + "'" + ' ...");\n' +
+      code = "this.info(\"" + this.tr("Starting application").toString() +
+      /* eslint-disable-next-line no-useless-concat */
+      " '" + this.getName() + "'" + " ...\");\n" +
         (code || "") +
-        'this.info("' + this.tr("Successfully started").toString() + '.");\n';
+        "this.info(\"" + this.tr("Successfully started").toString() + ".\");\n";
 
       // try to create a function
       try {
         this.__oldCode = code;
         this.fun = qx.event.GlobalError.observeMethod(new Function(code));
-      } catch(ex) {
+      } catch (ex) {
         exc = ex;
       }
 
@@ -832,15 +826,13 @@ qx.Class.define("qxl.playground.Application",
         this.fun.call(this.__playArea.getApp());
         qx.ui.core.queue.Manager.flush();
         this.__afterReg = qx.lang.Object.clone(qx.core.ObjectRegistry.getRegistry());
-      } catch(ex) {
+      } catch (ex) {
         exc = ex;
       }
 
       // store the new standalone app if available
-      for(var name in reg)
-      {
-        if(this.__isAppClass(name))
-        {
+      for (var name in reg) {
+        if (this.__isAppClass(name)) {
           this.__currentStandalone = name;
           this.__executeStandaloneApp(name);
           break;
@@ -864,8 +856,7 @@ qx.Class.define("qxl.playground.Application",
      *
      * @param e {qx.event.type.Event} A possible events (unused)
      */
-    run : function(e)
-    {
+    run : function(e) {
       var code = this.__editor.getCode();
       if (code && this.__isCodeNotEqual(code, this.getOriginCode())) {
         this.__addCodeToHistory(code);
@@ -900,8 +891,7 @@ qx.Class.define("qxl.playground.Application",
      * @param name {String} Name of the class to examine
      * @return {Boolean} Whether it is a registered application class
      */
-    __isAppClass : function(name)
-    {
+    __isAppClass : function(name) {
       if (name === "qxl.playground.Application") {
         return false;
       }
@@ -911,13 +901,13 @@ qx.Class.define("qxl.playground.Application",
         return (
           clazz && clazz.superclass &&
           clazz.superclass.classname === "qx.application.Standalone"
-        )
+        );
       // mobile mode supports mobild applications
       } else if (this.__mode == "mobile") {
         return (
           clazz && clazz.superclass &&
           clazz.superclass.classname === "qx.application.Mobile"
-        )
+        );
       }
       return false;
     },
@@ -928,19 +918,18 @@ qx.Class.define("qxl.playground.Application",
      *
      * @param name {String} Name of the application class to execute
      */
-    __executeStandaloneApp : function(name)
-    {
+    __executeStandaloneApp : function(name) {
       var self = this;
       qx.application.Standalone.prototype._createRootWidget = function() {
         return self.__playArea.getApp().getRoot();
       };
 
-      var app = new qx.Class.$$registry[name];
+      var app = new qx.Class.$$registry[name]();
 
       try {
         app.main();
         qx.ui.core.queue.Manager.flush();
-      } catch(ex) {
+      } catch (ex) {
         var exc = ex;
         this.error(this.__errorMsg.replace(/\|/g, "\n") + exc);
       }
@@ -954,8 +943,7 @@ qx.Class.define("qxl.playground.Application",
    *****************************************************************************
    */
 
-  destruct : function()
-  {
+  destruct : function() {
     this.__history = this.__beforeReg = this.__afterReg = null;
     this._disposeObjects(
       "__currentStandalone", "__samples", "__toolbar", "__editor",

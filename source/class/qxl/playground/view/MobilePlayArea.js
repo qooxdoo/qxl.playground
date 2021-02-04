@@ -92,8 +92,7 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
 
 
     // overridden
-    init : function()
-    {
+    init : function() {
       if (this._initialized) {
         return;
       }
@@ -128,7 +127,7 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
     reset : function(beforeReg, afterReg, code) {
       this._playRoot.removeAll();
 
-      if(this.__manager) {
+      if (this.__manager) {
         this.__manager.dispose();
         this.__manager = null;
       }

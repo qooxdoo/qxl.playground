@@ -22,6 +22,7 @@
  * @asset(qxl/playground/*)
  * @ignore(ace.*, require)
  */
+/* global ace require*/
 qx.Class.define("qxl.playground.view.Editor",
 {
   extend : qx.ui.container.Composite,
@@ -47,14 +48,13 @@ qx.Class.define("qxl.playground.view.Editor",
         };
         loader.open("GET", uri);
         loader.send();
-      }
+      };
       load(resource);
     }
   },
 
 
-  construct : function()
-  {
+  construct : function() {
     this.base(arguments);
   },
 
@@ -80,8 +80,7 @@ qx.Class.define("qxl.playground.view.Editor",
      * The constructor was spit up to make the included mixin available during
      * the init process.
      */
-    init: function()
-    {
+    init: function() {
       this.setBackgroundColor("white");
 
       // If widgets are added to the container, the zIndex of the editor blocker
@@ -119,7 +118,7 @@ qx.Class.define("qxl.playground.view.Editor",
         wrap      : false,
         font      : qx.bom.Font.fromString("14px monospace"),
         backgroundColor: "white",
-        padding   : [0,0,0,5],
+        padding   : [0, 0, 0, 5],
         decorator : null
       });
       this.add(this.__textarea, { flex : 1 });
@@ -203,9 +202,8 @@ qx.Class.define("qxl.playground.view.Editor",
     getCode : function() {
       if (this.__highlighted && this.__ace) {
         return this.__ace.getSession().getValue();
-      } else {
+      } 
         return this.__textarea.getValue();
-      }
     },
 
 
@@ -272,8 +270,7 @@ qx.Class.define("qxl.playground.view.Editor",
    *****************************************************************************
    */
 
-  destruct : function()
-  {
+  destruct : function() {
     this._disposeObjects("__textarea");
     this.__ace = null;
   }

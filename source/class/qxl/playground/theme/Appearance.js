@@ -26,8 +26,7 @@ qx.Theme.define("qxl.playground.theme.Appearance",
   {
     "app-header" :
     {
-      style : function(states)
-      {
+      style : function(states) {
         return {
           font : "headline",
           textColor : "text-selected",
@@ -43,8 +42,7 @@ qx.Theme.define("qxl.playground.theme.Appearance",
       include : "tabview-page/button",
       alias : "tabview-page/button",
 
-      style : function(states, superStyles)
-      {
+      style : function(states, superStyles) {
         return {
           font: states.checked ? "bold" : "default",
           textColor: "white",
@@ -61,7 +59,7 @@ qx.Theme.define("qxl.playground.theme.Appearance",
       style : function() {
         return {
           backgroundColor: "light-background"
-        }
+        };
       }
     },
 

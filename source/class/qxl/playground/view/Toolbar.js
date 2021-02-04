@@ -35,8 +35,7 @@ qx.Class.define("qxl.playground.view.Toolbar",
   extend : qx.ui.toolbar.ToolBar,
 
 
-  construct : function()
-  {
+  construct : function() {
     this.base(arguments);
 
     this.__menuItemStore = {};
@@ -142,7 +141,7 @@ qx.Class.define("qxl.playground.view.Toolbar",
 
     // add a button for overflow handling
     var chevron = new qx.ui.toolbar.MenuButton(null, "icon/22/actions/media-seek-forward.png");
-    chevron.setAppearance("toolbar-button");  // hide the down arrow icon
+    chevron.setAppearance("toolbar-button"); // hide the down arrow icon
     this.add(chevron);
     this.setOverflowIndicator(chevron);
 

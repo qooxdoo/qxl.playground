@@ -24,8 +24,7 @@ qx.Class.define("qxl.playground.view.PlayArea",
   extend : qx.ui.container.Stack,
 
 
-  construct : function()
-  {
+  construct : function() {
     this.base(arguments);
     this.setDynamic(true);
 

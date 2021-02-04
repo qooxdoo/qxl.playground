@@ -20,8 +20,7 @@ qx.Class.define("qxl.playground.view.WebsiteContent",
   extend : qx.ui.core.Widget,
 
 
-  construct : function()
-  {
+  construct : function() {
     this.base(arguments);
     this.setAppearance("website-content");
 

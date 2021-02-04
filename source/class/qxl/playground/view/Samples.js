@@ -32,8 +32,7 @@ qx.Class.define("qxl.playground.view.Samples",
   extend : qx.ui.container.Composite,
 
 
-  construct : function()
-  {
+  construct : function() {
     this.base(arguments);
 
     // layout stuff
@@ -173,9 +172,8 @@ qx.Class.define("qxl.playground.view.Samples",
         group : function(data) {
           if (data.getCategory() == "static") {
             return qx.locale.Manager.tr("Static");
-          } else {
+          } 
             return qx.locale.Manager.tr("User");
-          }
         }
       });
 

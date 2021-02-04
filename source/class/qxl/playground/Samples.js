@@ -27,28 +27,26 @@ qx.Class.define("qxl.playground.Samples",
    * @param array {qx.data.Array?} The array to which the objects should be
    *   added.
    */
-  construct : function(array)
-  {
+  construct : function(array) {
     this.base(arguments);
 
     // initialize the model
     if (!array) {
-      array = new qx.data.Array()
+      array = new qx.data.Array();
     }
     this.setModel(array);
-
+    
     // remove all stored static samples
-    for (var i = array.length - 1; i >= 0; i--) {
+    for (let i = array.length - 1; i >= 0; i--) {
       var item = array.getItem(i);
       if (item.getCategory() == "static") {
         array.remove(item);
       }
-    };
+    }
 
     var textAreas = document.getElementsByTagName("TEXTAREA");
 
-    for (var i = textAreas.length -1; i >= 0; i--)
-    {
+    for (let i = textAreas.length -1; i >= 0; i--) {
       if (textAreas[i].className == "qx_samples") {
         var name = textAreas[i].title.split("-")[0];
         var mode = textAreas[i].title.split("-")[1];
@@ -90,7 +88,7 @@ qx.Class.define("qxl.playground.Samples",
         if (sample.getName() == name && sample.getMode() == mode) {
           return sample;
         }
-      };
+      }
       return null;
     },
 
@@ -107,7 +105,7 @@ qx.Class.define("qxl.playground.Samples",
         if (sample.getMode() == mode) {
           return sample;
         }
-      };
+      }
       return null;
     },
 
@@ -126,7 +124,7 @@ qx.Class.define("qxl.playground.Samples",
         if (sample.getName() == name && sample.getMode() == mode) {
           return true;
         }
-      };
+      }
       return false;
     }
   }
