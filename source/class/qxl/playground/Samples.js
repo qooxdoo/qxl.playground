@@ -19,23 +19,22 @@
  * Samples data container. This class is responsible for getting the samples
  * stored in textareas in the index.mhtml file into the JavaScript world.
  */
-qx.Class.define("qxl.playground.Samples",
-{
-  extend : qx.core.Object,
+qx.Class.define("qxl.playground.Samples", {
+  extend: qx.core.Object,
 
   /**
    * @param array {qx.data.Array?} The array to which the objects should be
    *   added.
    */
-  construct : function(array) {
-    this.base(arguments);
+  construct(array) {
+    super();
 
     // initialize the model
     if (!array) {
       array = new qx.data.Array();
     }
     this.setModel(array);
-    
+
     // remove all stored static samples
     for (let i = array.length - 1; i >= 0; i--) {
       var item = array.getItem(i);
@@ -46,7 +45,7 @@ qx.Class.define("qxl.playground.Samples",
 
     var textAreas = document.getElementsByTagName("TEXTAREA");
 
-    for (let i = textAreas.length -1; i >= 0; i--) {
+    for (let i = textAreas.length - 1; i >= 0; i--) {
       if (textAreas[i].className == "qx_samples") {
         var name = textAreas[i].title.split("-")[0];
         var mode = textAreas[i].title.split("-")[1];
@@ -55,28 +54,26 @@ qx.Class.define("qxl.playground.Samples",
           name: name,
           code: code,
           mode: mode,
-          category: "static"
+          category: "static",
         };
+
         array.unshift(qx.data.marshal.Json.createModel(data, true));
       }
     }
   },
 
-
-  properties : {
+  properties: {
     /** Model property to hald the data array. */
-    model : {}
+    model: {},
   },
 
-
-  members :
-  {
+  members: {
     /**
      * Returns the sample stored with the given name.
      * @param nameandmode {String} the name and mode of the sample code.
      * @return {String|null} Returns the sample code, if available.
      */
-    get : function(nameandmode) {
+    get(nameandmode) {
       // split the name and mode into separate parts
       var name = nameandmode.split("-")[0];
       var mode = nameandmode.split("-")[1];
@@ -92,13 +89,12 @@ qx.Class.define("qxl.playground.Samples",
       return null;
     },
 
-
     /**
      * Get the first available sample for the given mode.
      * @param mode {String} The mode to look for.
      * @return {Object|null} A sample object.
      */
-    getFirstSample : function(mode) {
+    getFirstSample(mode) {
       var model = this.getModel();
       for (var i = 0; i < model.length; i++) {
         var sample = model.getItem(i);
@@ -109,13 +105,12 @@ qx.Class.define("qxl.playground.Samples",
       return null;
     },
 
-
     /**
      * Check if a sample with the given name and mode is available.
      * @param nameandmode {String} The name and mode of the sample.
      * @return {Boolean} true, if the sample is available.
      */
-    isAvailable : function(nameandmode) {
+    isAvailable(nameandmode) {
       var name = nameandmode.split("-")[0];
       var mode = nameandmode.split("-")[1];
       var model = this.getModel();
@@ -126,6 +121,6 @@ qx.Class.define("qxl.playground.Samples",
         }
       }
       return false;
-    }
-  }
+    },
+  },
 });

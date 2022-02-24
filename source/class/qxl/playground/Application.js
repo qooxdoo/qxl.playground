@@ -25,94 +25,87 @@
  *
  * @ignore(location.*)
  * @asset(qx/icon/Tango/22/*)
- * 
+ *
  */
- /*  eslint-disable no-alert */
+/*  eslint-disable no-alert */
 
-qx.Class.define("qxl.playground.Application",
-{
-  extend : qx.application.Standalone,
+qx.Class.define("qxl.playground.Application", {
+  extend: qx.application.Standalone,
 
-
-  properties :
-  {
+  properties: {
     /** The name of the current application.*/
-    name : {
-      check : "String",
-      apply : "_applyName",
-      init: ""
+    name: {
+      check: "String",
+      apply: "_applyName",
+      init: "",
     },
-
 
     /** Code to check agains as unchanged source of the loaded code.*/
-    originCode : {
-      check : "String",
-      apply : "_applyOriginCode",
-      init : ""
+    originCode: {
+      check: "String",
+      apply: "_applyOriginCode",
+      init: "",
     },
 
-
     /** The current selected sample model. */
-    currentSample : {
-      apply : "_applyCurrentSample",
-      event : "changeCurrentSample",
-      nullable : true
-    }
+    currentSample: {
+      apply: "_applyCurrentSample",
+      event: "changeCurrentSample",
+      nullable: true,
+    },
   },
-
 
   /*
    *****************************************************************************
       MEMBERS
    *****************************************************************************
   */
-  members :
-  {
+  members: {
     // UI Components
-    __header : null,
-    __mainsplit : null,
-    __toolbar : null,
-    __log : null,
-    __editor : null,
-    __playArea : null,
-    __samplesPane : null,
-    __editorsplit : null,
-    __websiteContent : null,
+    __header: null,
+    __mainsplit: null,
+    __toolbar: null,
+    __log: null,
+    __editor: null,
+    __playArea: null,
+    __samplesPane: null,
+    __editorsplit: null,
+    __websiteContent: null,
 
     // storages
-    __samples : null,
-    __store : null,
+    __samples: null,
+    __store: null,
 
-    __history : null,
-    __urlShorter : null,
+    __history: null,
+    __urlShorter: null,
 
     __currentStandalone: null,
 
     // flag used for the warning for IE
-    __ignoreSaveFaults : false,
+    __ignoreSaveFaults: false,
 
-    __modified : false,
+    __modified: false,
 
     // used for removing the created objects in the run code
-    __beforeReg : null,
-    __afterReg : null,
-    __oldCode : null,
+    __beforeReg: null,
+    __afterReg: null,
+    __oldCode: null,
 
     __errorMsg: qx.locale.Manager.tr(
       "Unfortunately, an unrecoverable internal error was caused by your code." +
-      " This may prevent the playground application to run properly.||"
+        " This may prevent the playground application to run properly.||"
     ),
 
-    __mode : null,
-    __maximized : null,
+    __mode: null,
+    __maximized: null,
 
     /**
      * This method contains the initial application code and gets called
      * during startup of the application.
      */
-    main : function() {
+    main() {
       // Call super class
-      this.base(arguments);
+      super.main();
 
       // register error handler
       qx.event.GlobalError.setErrorHandler(this.__onGlobalError, this);
@@ -122,21 +115,25 @@ qx.Class.define("qxl.playground.Application",
 
       // main container
       var mainContainer = new qx.ui.container.Composite(layout);
-      this.getRoot().add(mainContainer, { edge : 0 });
+      this.getRoot().add(mainContainer, { edge: 0 });
 
       // qooxdoo header
       this.__header = new qxl.playground.view.Header();
-      mainContainer.add(this.__header, { flex : 0 });
+      mainContainer.add(this.__header, { flex: 0 });
       this.__header.addListener("changeMode", this._onChangeMode, this);
 
       // toolbar
       this.__toolbar = new qxl.playground.view.Toolbar();
-      mainContainer.add(this.__toolbar, { flex : 0 });
+      mainContainer.add(this.__toolbar, { flex: 0 });
 
       // toolbar listener
       this.__toolbar.addListener("run", this.run, this);
       this.__toolbar.addListener("changeSample", this.__onSampleChange, this);
-      this.__toolbar.addListener("changeHighlight", this.__onHighlightChange, this);
+      this.__toolbar.addListener(
+        "changeHighlight",
+        this.__onHighlightChange,
+        this
+      );
       this.__toolbar.addListener("changeLog", this.__onLogChange, this);
       this.__toolbar.addListener("shortenUrl", this.__onUrlShorten, this);
       this.__toolbar.addListener("openApi", this.__onApiOpen, this);
@@ -145,7 +142,7 @@ qx.Class.define("qxl.playground.Application",
 
       // mainsplit, contains the editor splitpane and the info splitpane
       this.__mainsplit = new qx.ui.splitpane.Pane("horizontal");
-      mainContainer.add(this.__mainsplit, { flex : 1 });
+      mainContainer.add(this.__mainsplit, { flex: 1 });
       this.__mainsplit.setAppearance("app-splitpane");
 
       // editor split (left side of main split)
@@ -162,14 +159,22 @@ qx.Class.define("qxl.playground.Application",
       this.__samplesPane.addListener("delete", this.__onDelete, this);
       this.__samplesPane.addListener("rename", this.__onRename, this);
       this.bind("currentSample", this.__samplesPane, "currentSample");
-      this.__samplesPane.addListener("beforeSelectSample", function(e) {
-        if (this.__discardChanges()) {
-          e.stop();
-        }
-      }, this);
-      this.__samplesPane.addListener("selectSample", function(e) {
-        this.setCurrentSample(e.getData());
-      }, this);
+      this.__samplesPane.addListener(
+        "beforeSelectSample",
+        function (e) {
+          if (this.__discardChanges()) {
+            e.stop();
+          }
+        },
+        this
+      );
+      this.__samplesPane.addListener(
+        "selectSample",
+        function (e) {
+          this.setCurrentSample(e.getData());
+        },
+        this
+      );
 
       // initialize custom samples
       this.__store = new qx.data.store.Offline("qooxdoo-playground-samples");
@@ -184,13 +189,16 @@ qx.Class.define("qxl.playground.Application",
       }
       this.__store.bind("model", this.__samplesPane, "model");
 
-
       // need to split up the creation process
       this.__editor = new qxl.playground.view.Editor();
-      this.__editor.addListener("disableHighlighting", function() {
-        this.__toolbar.enableHighlighting(false);
-      }, this);
-      qxl.playground.view.Editor.loadAce(function() {
+      this.__editor.addListener(
+        "disableHighlighting",
+        function () {
+          this.__toolbar.enableHighlighting(false);
+        },
+        this
+      );
+      qxl.playground.view.Editor.loadAce(function () {
         this.init();
       }, this);
 
@@ -200,16 +208,28 @@ qx.Class.define("qxl.playground.Application",
       this.__mainsplit.add(infosplit, 3);
 
       this.__playArea = new qxl.playground.view.PlayArea();
-      this.__playArea.addListener("toggleMaximize", this._onToggleMaximize, this);
+      this.__playArea.addListener(
+        "toggleMaximize",
+        this._onToggleMaximize,
+        this
+      );
       infosplit.add(this.__playArea, 2);
 
-      this.__mainsplit.getChildControl("splitter").addListener("pointerdown", function() {
-        this.__editor.block();
-      }, this);
+      this.__mainsplit.getChildControl("splitter").addListener(
+        "pointerdown",
+        function () {
+          this.__editor.block();
+        },
+        this
+      );
 
-      this.__mainsplit.addListener("losecapture", function() {
-        this.__editor.unblock();
-      }, this);
+      this.__mainsplit.addListener(
+        "losecapture",
+        function () {
+          this.__editor.unblock();
+        },
+        this
+      );
 
       this.__log = new qxl.logpane.LogPane();
 
@@ -217,11 +237,10 @@ qx.Class.define("qxl.playground.Application",
       this.__log.exclude();
     },
 
-
     /**
      * Initialization after the external editor has been loaded.
      */
-    init: function() {
+    init() {
       this.__editor.init();
 
       // check if mobile chould be used
@@ -249,12 +268,11 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     // ***************************************************
     // PROPERTY APPLY
     // ***************************************************
     // property apply
-    _applyName : function(value, old) {
+    _applyName(value, old) {
       if (!this.__playArea) {
         return;
       }
@@ -262,15 +280,13 @@ qx.Class.define("qxl.playground.Application",
       this.__updateTitle(value);
     },
 
-
     // property apply
-    _applyOriginCode : function(value, old) {
+    _applyOriginCode(value, old) {
       this.__modified = false;
     },
 
-
     // property apply
-    _applyCurrentSample : function(newSample, old) {
+    _applyCurrentSample(newSample, old) {
       // ignore when the sample is set to null
       if (!newSample) {
         return;
@@ -285,7 +301,9 @@ qx.Class.define("qxl.playground.Application",
 
       // only add static samples to the url as name
       if (newSample.getCategory() == "static") {
-        this.__history.addToHistory(newSample.getName() + "-" + newSample.getMode());
+        this.__history.addToHistory(
+          newSample.getName() + "-" + newSample.getMode()
+        );
       } else {
         this.__addCodeToHistory(newSample.getCode());
       }
@@ -295,11 +313,10 @@ qx.Class.define("qxl.playground.Application",
       this.run();
     },
 
-
     // ***************************************************
     // MODE HANDLING
     // ***************************************************
-    __enableWebsiteMode : function(enabled) {
+    __enableWebsiteMode(enabled) {
       if (enabled) {
         this.__toolbar.exclude();
         this.__mainsplit.exclude();
@@ -311,7 +328,7 @@ qx.Class.define("qxl.playground.Application",
       // on demand creation
       if (!this.__websiteContent && enabled) {
         this.__websiteContent = new qxl.playground.view.WebsiteContent();
-        this.getRoot().getChildren()[0].add(this.__websiteContent, {flex: 1});
+        this.getRoot().getChildren()[0].add(this.__websiteContent, { flex: 1 });
       }
 
       if (this.__websiteContent) {
@@ -327,7 +344,7 @@ qx.Class.define("qxl.playground.Application",
      * Event handler for changing the mode of the palyground.
      * @param e {qx.event.type.Data} The data event containing the mode.
      */
-    _onChangeMode : function(e) {
+    _onChangeMode(e) {
       var mode = e.getData();
       // ignore setting the same mode
       if (mode == this.__mode) {
@@ -342,14 +359,13 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Helper to determinate if the mode is currently supported e.g. mobile
      * in the current runtime.
      * @param mode {String} The name of the mode.
      * @return {boolean} <code>true</code>, if the given mode can be used.
      */
-    __supportsMode : function(mode) {
+    __supportsMode(mode) {
       if (mode == "mobile") {
         var engine = qx.core.Environment.get("engine.name");
 
@@ -358,11 +374,17 @@ qx.Class.define("qxl.playground.Application",
           return true;
         }
         // ie > 10 is ok
-        if (engine == "mshtml" && parseInt(qx.core.Environment.get("browser.documentmode")) >= 10) {
+        if (
+          engine == "mshtml" &&
+          parseInt(qx.core.Environment.get("browser.documentmode")) >= 10
+        ) {
           return true;
         }
         // ff > 10 is ok
-        if (engine == "gecko" && parseInt(qx.core.Environment.get("engine.version")) >= 10) {
+        if (
+          engine == "gecko" &&
+          parseInt(qx.core.Environment.get("engine.version")) >= 10
+        ) {
           return true;
         }
       } else if (mode == "ria" || mode == "website") {
@@ -371,12 +393,11 @@ qx.Class.define("qxl.playground.Application",
       return false;
     },
 
-
     /**
      * Setter and dispatcher for the current mode the playground is in.
      * @param mode {String} The mode to use.
      */
-    setMode : function(mode) {
+    setMode(mode) {
       // check if the mode is supported
       if (!this.__supportsMode(mode)) {
         throw new Error("Mode '" + mode + "' not supported");
@@ -409,7 +430,6 @@ qx.Class.define("qxl.playground.Application",
       return true;
     },
 
-
     // ***************************************************
     // SAMPEL SAVE / DELETE
     // ***************************************************
@@ -417,13 +437,13 @@ qx.Class.define("qxl.playground.Application",
      * Helper to write the current code to the model and with that to the
      * offline store.
      */
-    __onSave : function() {
+    __onSave() {
       var current = this.getCurrentSample();
 
       // if we don't have a current sample and the sample is a static one
       if (!current || current.getCategory() == "static") {
         this.__onSaveAs();
-      // if its a user sample which is selected, we just store the new code
+        // if its a user sample which is selected, we just store the new code
       } else {
         // store in curent sample
         current.setCode(this.__editor.getCode());
@@ -433,13 +453,12 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Helper to write the current code to the model and with that to the
      * offline store.
      * @lint ignoreDeprecated(confirm)
      */
-    __onSaveAs : function() {
+    __onSaveAs() {
       // ask the user for a new name for the property
       var name = window.prompt(this.tr("Please enter a name"), ""); // empty value string of IE
       if (!name) {
@@ -449,7 +468,11 @@ qx.Class.define("qxl.playground.Application",
       var samples = this.__store.getModel();
       for (var i = 0; i < samples.length; i++) {
         if (samples.getItem(i).getName() == name) {
-          if (window.confirm(this.tr("Sample already exists. Do you want to overwrite?"))) {
+          if (
+            window.confirm(
+              this.tr("Sample already exists. Do you want to overwrite?")
+            )
+          ) {
             this.__onSave();
           }
           return;
@@ -460,8 +483,9 @@ qx.Class.define("qxl.playground.Application",
         name: name,
         code: this.__editor.getCode(),
         mode: this.__mode,
-        category: "user"
+        category: "user",
       };
+
       var sample = qx.data.marshal.Json.createModel(data, true);
       // push the data to the model (storest automatically)
       this.__store.getModel().push(sample);
@@ -470,11 +494,10 @@ qx.Class.define("qxl.playground.Application",
       this.__samplesPane.select(sample);
     },
 
-
     /**
      * Helper to delete the selected sample.
      */
-    __onDelete : function() {
+    __onDelete() {
       var current = this.getCurrentSample();
       // if we have a sample selected and its not a static one
       if (current || current.getCategory() != "static") {
@@ -487,16 +510,18 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Helper to rename a sample.
      */
-    __onRename : function() {
+    __onRename() {
       var current = this.getCurrentSample();
       // if we have a sample and its not a static one
       if (current || current.getCategory() != "static") {
         // ask the user for a new name
-      var name = window.prompt(this.tr("Please enter a name"), current.getName());
+        var name = window.prompt(
+          this.tr("Please enter a name"),
+          current.getName()
+        );
         if (!name) {
           return;
         }
@@ -505,12 +530,11 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Helper to toggle the editors split pane which means togglinge the
      * visibility of the editor and the samples pane.
      */
-    _onToggleMaximize : function() {
+    _onToggleMaximize() {
       this.__maximized = !this.__maximized;
       if (this.__maximized) {
         this.__editorsplit.exclude();
@@ -518,7 +542,6 @@ qx.Class.define("qxl.playground.Application",
         this.__editorsplit.show();
       }
     },
-
 
     // ***************************************************
     // TOOLBAR HANDLER
@@ -528,7 +551,7 @@ qx.Class.define("qxl.playground.Application",
      * @param e {qx.event.type.Data} Data event containing the boolean
      * weather the examples should be shown.
      */
-    __onSampleChange : function(e) {
+    __onSampleChange(e) {
       qx.bom.Cookie.set("playgroundShowExamples", e.getData(), 100);
       if (e.getData()) {
         this.__samplesPane.show();
@@ -537,61 +560,65 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Handler for the changeHighlight event of the toolbar.
      * @param e {qx.event.type.Data} Data event containing the boolean to change
      *   the highlighted code view.
      */
-    __onHighlightChange : function(e) {
+    __onHighlightChange(e) {
       qx.bom.Cookie.set("playgroundHighlight", e.getData(), 100);
       this.__editor.useHighlight(e.getData());
     },
-
 
     /**
      * Handler for showing the log of the toolbar.
      * @param e {qx.event.type.Data} Data event containing if the log should
      *   be shown.
      */
-    __onLogChange : function(e) {
+    __onLogChange(e) {
       e.getData() ? this.__log.show() : this.__log.exclude();
     },
-
 
     /**
      * Handler for the url shortening service.
      */
-    __onUrlShorten : function() {
+    __onUrlShorten() {
       window.open(
-        "http://tinyurl.com/create.php?url=" + encodeURIComponent(location.href),
+        "http://tinyurl.com/create.php?url=" +
+          encodeURIComponent(location.href),
         "tinyurl",
         "width=800,height=600,resizable=yes,scrollbars=yes"
       );
     },
 
-
     /**
      * Handler for opening the api viewer.
      */
-    __onApiOpen : function() {
-      window.open((qx.core.Environment.get("qx.serve.appspath") || "https://www.qooxdoo.org/qxl.") + "apiviewer/");
+    __onApiOpen() {
+      window.open(
+        (qx.core.Environment.get("qx.serve.appspath") ||
+          "https://www.qooxdoo.org/qxl.") + "apiviewer/"
+      );
     },
-
 
     /**
      * Handler for opening the manual.
      */
-    __onManualOpen : function() {
-      window.open((qx.core.Environment.get("qx.serve.docspath") || "https://www.qooxdoo.org/") + "docs");
+    __onManualOpen() {
+      window.open(
+        (qx.core.Environment.get("qx.serve.docspath") ||
+          "https://www.qooxdoo.org/") + "docs"
+      );
     },
-
 
     /**
      * Handler for opening the demo browser.
      */
-    __onDemoBrowser : function() {
-      window.open((qx.core.Environment.get("qx.serve.appspath") || "https://www.qooxdoo.org/qxl.") + "widgetbrowser/");
+    __onDemoBrowser() {
+      window.open(
+        (qx.core.Environment.get("qx.serve.appspath") ||
+          "https://www.qooxdoo.org/qxl.") + "widgetbrowser/"
+      );
     },
 
     // ***************************************************
@@ -600,7 +627,7 @@ qx.Class.define("qxl.playground.Application",
     /**
      * Back button and bookmark support
      */
-    __initBookmarkSupport : function() {
+    __initBookmarkSupport() {
       this.__history = qx.bom.History.getInstance();
       this.__history.addListener("changeState", this.__onHistoryChanged, this);
 
@@ -616,7 +643,7 @@ qx.Class.define("qxl.playground.Application",
         this.setCurrentSample(sample);
         return;
 
-      // check if a mode is given
+        // check if a mode is given
       } else if (state.indexOf("mode=") == 0) {
         var mode = state.substring(5, state.length);
         if (mode == "mobile") {
@@ -633,7 +660,7 @@ qx.Class.define("qxl.playground.Application",
         this.setCurrentSample(sample);
         return;
 
-      // if there is a state given
+        // if there is a state given
       } else if (state && state.charAt(0) == "{") {
         let name = this.tr("Custom Code");
         code = this.__parseURLCode(state);
@@ -648,7 +675,7 @@ qx.Class.define("qxl.playground.Application",
         this.setName(name);
         this.run();
 
-      // if no state is given
+        // if no state is given
       } else {
         var sample = this.__samples.getFirstSample(this.__mode);
         this.setCurrentSample(sample);
@@ -656,12 +683,11 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Handler for changes of the history.
      * @param e {qx.event.type.Data} Data event containing the history changes.
      */
-    __onHistoryChanged : function(e) {
+    __onHistoryChanged(e) {
       var state = e.getData();
 
       // is a sample name given
@@ -671,7 +697,7 @@ qx.Class.define("qxl.playground.Application",
           this.setCurrentSample(sample);
         }
 
-      // is code given
+        // is code given
       } else if (state != "") {
         var code = this.__parseURLCode(state);
         if (code != this.__editor.getCode()) {
@@ -682,14 +708,13 @@ qx.Class.define("qxl.playground.Application",
       }
     },
 
-
     /**
      * Helper method for parsing the given url parameter to a valid code
      * fragment.
      * @param state {String} The given state of the browsers history.
      * @return {String} A valid code snippet.
      */
-    __parseURLCode : function(state) {
+    __parseURLCode(state) {
       try {
         var data = qx.lang.Json.parse(state);
         // change the mode in case a different mode is given
@@ -701,27 +726,41 @@ qx.Class.define("qxl.playground.Application",
         var error = this.tr("// Could not handle URL parameter! \n// %1", e);
 
         if (qx.core.Environment.get("engine.name") == "mshtml") {
-          error += this.tr("// Your browser has a length restriction of the " +
-                          "URL parameter which could have caused the problem.");
+          error += this.tr(
+            "// Your browser has a length restriction of the " +
+              "URL parameter which could have caused the problem."
+          );
         }
         return error;
       }
     },
-
 
     /**
      * Adds the given code to the history.
      * @param code {String} the code to add.
      * @lint ignoreDeprecated(confirm)
      */
-    __addCodeToHistory : function(code) {
+    __addCodeToHistory(code) {
       var codeJson =
         /* eslint-disable-next-line no-useless-concat */
-        "{\"code\":" + "\"" + encodeURIComponent(code) + "\", \"mode\":\"" + this.__mode + "\"}";
-      if (qx.core.Environment.get("engine.name") == "mshtml" && codeJson.length > 1300) {
-        if (!this.__ignoreSaveFaults && window.confirm(
-          this.tr("Cannot append sample code to URL, as it is too long. " +
-                  "Disable this warning in the future?"))
+        '{"code":' +
+        '"' +
+        encodeURIComponent(code) +
+        '", "mode":"' +
+        this.__mode +
+        '"}';
+      if (
+        qx.core.Environment.get("engine.name") == "mshtml" &&
+        codeJson.length > 1300
+      ) {
+        if (
+          !this.__ignoreSaveFaults &&
+          window.confirm(
+            this.tr(
+              "Cannot append sample code to URL, as it is too long. " +
+                "Disable this warning in the future?"
+            )
+          )
         ) {
           this.__ignoreSaveFaults = true;
         }
@@ -729,7 +768,6 @@ qx.Class.define("qxl.playground.Application",
       }
       this.__history.addToHistory(codeJson);
     },
-
 
     // ***************************************************
     // UPDATE & RUN & COMPARE
@@ -741,7 +779,7 @@ qx.Class.define("qxl.playground.Application",
      * @lint ignoreDeprecated(confirm)
      * @return {Boolean} <code>true</code> if the code has been modified
      */
-    __discardChanges : function() {
+    __discardChanges() {
       var userCode = this.__editor.getCode();
       if (userCode && this.__isCodeNotEqual(userCode, this.getOriginCode())) {
         if (!window.confirm(this.tr("Tap OK to discard your changes."))) {
@@ -751,14 +789,13 @@ qx.Class.define("qxl.playground.Application",
       return false;
     },
 
-
     /**
      * Special compare method for IE.
      * @param code1 {String} The first code to compare.
      * @param code2 {String} The second code to compare.
      * @return {Boolean} true, if the code is equal.
      */
-    __isCodeNotEqual : function(code1, code2) {
+    __isCodeNotEqual(code1, code2) {
       if (qx.core.Environment.get("engine.name") == "opera") {
         code1 = code1.replace(/\r?\n/g, "\n");
         code2 = code2.replace(/\r?\n/g, "\n");
@@ -771,26 +808,26 @@ qx.Class.define("qxl.playground.Application",
       var compareElem2 = document.getElementById("compare_div2");
       compareElem2.innerHTML = code2;
 
-      return (compareElem1.innerHTML.length != compareElem2.innerHTML.length ||
-        compareElem1.innerHTML != compareElem2.innerHTML);
+      return (
+        compareElem1.innerHTML.length != compareElem2.innerHTML.length ||
+        compareElem1.innerHTML != compareElem2.innerHTML
+      );
     },
-
 
     /**
      * Update the window title with given sample label
      * @param label {String} sample label
      * @return {String} new window title
      */
-    __updateTitle : function(label) {
+    __updateTitle(label) {
       var title = document.title.split(":")[0] + ": " + label;
       return title;
     },
 
-
     /**
      * Updates the qxl.playground.
      */
-    __updatePlayground : function() {
+    __updatePlayground() {
       var exc;
       this.__log.clear();
       this.__playArea.reset(this.__beforeReg, this.__afterReg, this.__oldCode);
@@ -802,11 +839,18 @@ qx.Class.define("qxl.playground.Application",
       var code = this.__editor.getCode();
       // special replacement for unicode "zero width space" [BUG #3635]
       code = code.replace("\u200b", "");
-      code = "this.info(\"" + this.tr("Starting application").toString() +
-      /* eslint-disable-next-line no-useless-concat */
-      " '" + this.getName() + "'" + " ...\");\n" +
+      code =
+        'this.info("' +
+        this.tr("Starting application").toString() +
+        /* eslint-disable-next-line no-useless-concat */
+        " '" +
+        this.getName() +
+        "'" +
+        ' ...");\n' +
         (code || "") +
-        "this.info(\"" + this.tr("Successfully started").toString() + ".\");\n";
+        'this.info("' +
+        this.tr("Successfully started").toString() +
+        '.");\n';
 
       // try to create a function
       try {
@@ -820,12 +864,16 @@ qx.Class.define("qxl.playground.Application",
       try {
         // save the current registry
         qx.ui.core.queue.Manager.flush();
-        this.__beforeReg = qx.lang.Object.clone(qx.core.ObjectRegistry.getRegistry());
+        this.__beforeReg = qx.lang.Object.clone(
+          qx.core.ObjectRegistry.getRegistry()
+        );
 
         // run the application
         this.fun.call(this.__playArea.getApp());
         qx.ui.core.queue.Manager.flush();
-        this.__afterReg = qx.lang.Object.clone(qx.core.ObjectRegistry.getRegistry());
+        this.__afterReg = qx.lang.Object.clone(
+          qx.core.ObjectRegistry.getRegistry()
+        );
       } catch (ex) {
         exc = ex;
       }
@@ -844,19 +892,22 @@ qx.Class.define("qxl.playground.Application",
         this.error(this.__errorMsg.replace(/\|/g, "\n") + exc);
         this.__toolbar.showLog(true);
         this.__log.show();
-        this.__playArea.reset(this.__beforeReg, this.__afterReg, this.__oldCode);
+        this.__playArea.reset(
+          this.__beforeReg,
+          this.__afterReg,
+          this.__oldCode
+        );
       }
 
       this.__log.fetch();
     },
-
 
     /**
      * Runs the current set sample and checks if it need to be saved to the url.
      *
      * @param e {qx.event.type.Event} A possible events (unused)
      */
-    run : function(e) {
+    run(e) {
       var code = this.__editor.getCode();
       if (code && this.__isCodeNotEqual(code, this.getOriginCode())) {
         this.__addCodeToHistory(code);
@@ -869,16 +920,14 @@ qx.Class.define("qxl.playground.Application",
       this.__updatePlayground();
     },
 
-
     /**
      * Handler for global errors.
      *
      * @param e {Event} The global error event
      */
-    __onGlobalError : function(e) {
+    __onGlobalError(e) {
       this.error(e);
     },
-
 
     // ***************************************************
     // STANDALONE SUPPORT
@@ -891,7 +940,7 @@ qx.Class.define("qxl.playground.Application",
      * @param name {String} Name of the class to examine
      * @return {Boolean} Whether it is a registered application class
      */
-    __isAppClass : function(name) {
+    __isAppClass(name) {
       if (name === "qxl.playground.Application") {
         return false;
       }
@@ -899,28 +948,30 @@ qx.Class.define("qxl.playground.Application",
       // ria mode supports standalone applications
       if (this.__mode == "ria") {
         return (
-          clazz && clazz.superclass &&
+          clazz &&
+          clazz.superclass &&
           clazz.superclass.classname === "qx.application.Standalone"
         );
-      // mobile mode supports mobild applications
+
+        // mobile mode supports mobild applications
       } else if (this.__mode == "mobile") {
         return (
-          clazz && clazz.superclass &&
+          clazz &&
+          clazz.superclass &&
           clazz.superclass.classname === "qx.application.Mobile"
         );
       }
       return false;
     },
 
-
     /**
      * Execute the class (given by name) as a standalone app
      *
      * @param name {String} Name of the application class to execute
      */
-    __executeStandaloneApp : function(name) {
+    __executeStandaloneApp(name) {
       var self = this;
-      qx.application.Standalone.prototype._createRootWidget = function() {
+      qx.application.Standalone.prototype._createRootWidget = function () {
         return self.__playArea.getApp().getRoot();
       };
 
@@ -933,9 +984,8 @@ qx.Class.define("qxl.playground.Application",
         var exc = ex;
         this.error(this.__errorMsg.replace(/\|/g, "\n") + exc);
       }
-    }
+    },
   },
-
 
   /*
    *****************************************************************************
@@ -943,11 +993,15 @@ qx.Class.define("qxl.playground.Application",
    *****************************************************************************
    */
 
-  destruct : function() {
+  destruct() {
     this.__history = this.__beforeReg = this.__afterReg = null;
     this._disposeObjects(
-      "__currentStandalone", "__samples", "__toolbar", "__editor",
-      "__playArea", "__log"
+      "__currentStandalone",
+      "__samples",
+      "__toolbar",
+      "__editor",
+      "__playArea",
+      "__log"
     );
-  }
+  },
 });

@@ -18,63 +18,56 @@
 /**
  * A custom apperance theme for the qxl.playground.
  */
-qx.Theme.define("qxl.playground.theme.Appearance",
-{
-  extend : qx.theme.indigo.Appearance,
+qx.Theme.define("qxl.playground.theme.Appearance", {
+  extend: qx.theme.indigo.Appearance,
 
-  appearances :
-  {
-    "app-header" :
-    {
-      style : function(states) {
+  appearances: {
+    "app-header": {
+      style(states) {
         return {
-          font : "headline",
-          textColor : "text-selected",
+          font: "headline",
+          textColor: "text-selected",
           backgroundColor: "background-selected-dark",
           decorator: "app-header",
-          padding : [10, 10, 0, 10]
+          padding: [10, 10, 0, 10],
         };
-      }
+      },
     },
 
-    "modeButton" :
-    {
-      include : "tabview-page/button",
-      alias : "tabview-page/button",
+    modeButton: {
+      include: "tabview-page/button",
+      alias: "tabview-page/button",
 
-      style : function(states, superStyles) {
+      style(states, superStyles) {
         return {
           font: states.checked ? "bold" : "default",
           textColor: "white",
-          decorator : states.checked ? "mode-select-tab" : null,
+          decorator: states.checked ? "mode-select-tab" : null,
           padding: [2, 15, 6, 15],
           marginBottom: -5,
-          marginTop: 8
+          marginTop: 8,
         };
-      }
+      },
     },
 
-
-    "website-content" : {
-      style : function() {
+    "website-content": {
+      style() {
         return {
-          backgroundColor: "light-background"
+          backgroundColor: "light-background",
         };
-      }
+      },
     },
 
+    "sample-list": {
+      include: "list",
+      alias: "list",
 
-    "sample-list" :
-    {
-      include : "list",
-      alias : "list",
-
-      style : function(states) {
+      style(states) {
         return {
           decorator: "separator-vertical",
-          padding : 0
+          padding: 0,
         };
-      }
-    }
-  }
+      },
+    },
+  },
 });

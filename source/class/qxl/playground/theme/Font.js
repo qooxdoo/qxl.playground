@@ -20,42 +20,40 @@
 /**
  * The custom font theme for the qxl.playground.
  */
-qx.Theme.define("qxl.playground.theme.Font",
-{
-  extend : qx.theme.indigo.Font,
+qx.Theme.define("qxl.playground.theme.Font", {
+  extend: qx.theme.indigo.Font,
 
-  fonts :
-  {
-    "header" :
-    {
-      size : (qx.core.Environment.get("os.name") == "win" &&
+  fonts: {
+    header: {
+      size:
+        qx.core.Environment.get("os.name") == "win" &&
         (qx.core.Environment.get("os.version") == "7" ||
-        qx.core.Environment.get("os.version") == "vista")) ? 16 : 15,
-      lineHeight : 1.4,
-      family : qx.core.Environment.get("os.name") == "osx" ?
-        [ "Lucida Grande" ] :
-        ((qx.core.Environment.get("os.name") == "win" &&
-          (qx.core.Environment.get("os.version") == "7" ||
-          qx.core.Environment.get("os.version") == "vista"))) ?
-        [ "Segoe UI", "Candara" ] :
-        [ "Tahoma", "Liberation Sans", "Arial", "sans-serif" ]
+          qx.core.Environment.get("os.version") == "vista")
+          ? 16
+          : 15,
+      lineHeight: 1.4,
+      family:
+        qx.core.Environment.get("os.name") == "osx"
+          ? ["Lucida Grande"]
+          : qx.core.Environment.get("os.name") == "win" &&
+            (qx.core.Environment.get("os.version") == "7" ||
+              qx.core.Environment.get("os.version") == "vista")
+          ? ["Segoe UI", "Candara"]
+          : ["Tahoma", "Liberation Sans", "Arial", "sans-serif"],
     },
 
-
-    "CodePen" :
-    {
-      size : 40,
-      family : ["serif"],
-      sources:
-      [
+    CodePen: {
+      size: 40,
+      family: ["serif"],
+      sources: [
         {
-          family : "JosefinSlab",
+          family: "JosefinSlab",
           source: [
             "qx/decoration/Indigo/font/JosefinSlab-SemiBold.woff",
-            "qx/decoration/Indigo/font/JosefinSlab-SemiBold.ttf"
-          ]
-        }
-      ]
-    }
-  }
+            "qx/decoration/Indigo/font/JosefinSlab-SemiBold.ttf",
+          ],
+        },
+      ],
+    },
+  },
 });

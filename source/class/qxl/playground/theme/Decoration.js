@@ -16,25 +16,21 @@
 
 ************************************************************************* */
 
+qx.Theme.define("qxl.playground.theme.Decoration", {
+  extend: qx.theme.indigo.Decoration,
 
-qx.Theme.define("qxl.playground.theme.Decoration",
-{
-  extend : qx.theme.indigo.Decoration,
-
-  aliases : {
-    decoration : "qx/decoration/Simple"
+  aliases: {
+    decoration: "qx/decoration/Simple",
   },
 
-  decorations :
-  {
-    "mode-select-tab" : {
-      include : "tabview-page-button-top",
+  decorations: {
+    "mode-select-tab": {
+      include: "tabview-page-button-top",
 
-      style :
-      {
-        color : "highlight-shade",
-        backgroundColor: "background-selected"
-      }
-    }
-  }
+      style: {
+        color: "highlight-shade",
+        backgroundColor: "background-selected",
+      },
+    },
+  },
 });

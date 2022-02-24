@@ -155,38 +155,6 @@ this.getManager().addDetail(page);
 page.show();</textarea>
 
 
-<!-- ********************************************************************** -->
-
-
-<textarea class="qx_samples" title="YQL Binding-mobile">
-// Data model
-var query = "select * from feed where url='http://feeds.feedburner.com/qooxdoo/news/content'";
-
-var delegate = {manipulateData : function(data) {
-  return data.query.results.item;
-}};
-var store = new qx.data.store.Yql(query, delegate);
-
-// View
-var page = new qx.ui.mobile.page.NavigationPage();
-page.setTitle("qooxdoo news");
-page.addListener("initialize", function()
-{
-  var list = new qx.ui.mobile.list.List({
-    configureItem : function(item, data, row)
-    {
-      item.setTitle(data.getTitle());
-      item.setSubtitle(data.getPubDate());
-    }
-  });
-
-  store.bind("model", list, "model");
-  page.getContent().add(list);
-},this);
-
-this.getManager().addDetail(page);
-page.show();</textarea>
-
 
 <!-- ********************************************************************** -->
 
@@ -484,25 +452,6 @@ slider2.bind("value", slider1, "value");
 // set up an unidirectional single value binding towards progress bar
 slider1.bind("value", progressbar, "value");</textarea>
 
-
-<!-- ********************************************************************** -->
-
-<textarea class="qx_samples" title="YQL Binding-ria">// Data model
-var query = "select * from feed where url='http://feeds.feedburner.com/qooxdoo/news/content'";
-
-var delegate = {manipulateData : function(data) {
-  return data.query.results.item;
-}};
-
-var store = new qx.data.store.Yql(query, delegate);
-
-// View
-var list = new qx.ui.form.List();
-this.getRoot().add(list, {left: 0, right: 0});
-
-var controller = new qx.data.controller.List(null, list, "title");
-
-store.bind("model", controller, "model");</textarea>
 
 </body>
 </html>

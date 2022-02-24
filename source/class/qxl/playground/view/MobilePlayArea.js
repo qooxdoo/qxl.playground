@@ -20,13 +20,11 @@
 /**
  * Widget responsible for hosting the run code for mobile apps.
  */
-qx.Class.define("qxl.playground.view.MobilePlayArea",
-{
-  extend : qxl.playground.view.RiaPlayArea,
+qx.Class.define("qxl.playground.view.MobilePlayArea", {
+  extend: qxl.playground.view.RiaPlayArea,
 
-
-  construct : function() {
-    this.base(arguments);
+  construct() {
+    super();
 
     this.setBackgroundColor("#d4d4d4");
 
@@ -46,7 +44,7 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
       [480, 800, "Android"],
       [800, 480, "Android"],
       [380, 685, "Android"],
-      [685, 320, "Android"]
+      [685, 320, "Android"],
     ];
 
     for (var i = 0; i < resolutions.length; i++) {
@@ -57,30 +55,32 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
       sizeSelect.add(item);
     }
 
-    sizeSelect.addListener("changeSelection", function(e) {
-      var newRes = e.getData()[0].getModel();
-      if (newRes) {
-        this.__setFixDimensions(newRes[0], newRes[1]);
-      } else {
-        this.__setFixDimensions(null, null);
-      }
-    }, this);
+    sizeSelect.addListener(
+      "changeSelection",
+      function (e) {
+        var newRes = e.getData()[0].getModel();
+        if (newRes) {
+          this.__setFixDimensions(newRes[0], newRes[1]);
+        } else {
+          this.__setFixDimensions(null, null);
+        }
+      },
+      this
+    );
 
     this._caption.addAt(sizeSelect, 2);
   },
 
-
-  members :
-  {
+  members: {
     // Page manager
-    __manager : null,
+    __manager: null,
 
     /**
      * Sets the dimensions to the given values.
      * @param width {Number} The width to set.
      * @param height {Number} The height to set.
      */
-    __setFixDimensions : function(width, height) {
+    __setFixDimensions(width, height) {
       this._dummy.setMinWidth(width);
       this._dummy.setMinHeight(height);
       this._dummy.setMaxWidth(width);
@@ -90,9 +90,8 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
       this.setMinHeight(height ? height + 2 : null);
     },
 
-
     // overridden
-    init : function() {
+    init() {
       if (this._initialized) {
         return;
       }
@@ -115,16 +114,15 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
       var self = this;
 
       this._playApp = new qx.application.Mobile();
-      this._playApp.getManager = function() {
+      this._playApp.getManager = function () {
         return self.__manager;
       };
 
       this._initialized = true;
     },
 
-
     // overridden
-    reset : function(beforeReg, afterReg, code) {
+    reset(beforeReg, afterReg, code) {
       this._playRoot.removeAll();
 
       if (this.__manager) {
@@ -133,6 +131,6 @@ qx.Class.define("qxl.playground.view.MobilePlayArea",
       }
 
       this.__manager = new qx.ui.mobile.page.Manager(false, this._playRoot);
-    }
-  }
+    },
+  },
 });

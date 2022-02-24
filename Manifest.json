@@ -1,5 +1,5 @@
 {
-  "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
+  "$schema": "https://qooxdoo.org/schema/Manifest-2-0-0.json",
   "info": {
     "name": "Playground",
     "summary": "A playground for application coding",
@@ -42,7 +42,6 @@
     }
   },
   "requires": {
-    "@qooxdoo/compiler": "^1.0.0",
-    "@qooxdoo/framework": "^6.0.0"
+    "@qooxdoo/framework": "^7.0.0"
   }
 }

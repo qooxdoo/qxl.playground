@@ -16,7 +16,7 @@ jobs:
           persist-credentials: false
 
       - name: Install
-        run: npm install @qooxdoo/compiler --no-save --no-package-lock
+        run: npm install @qooxdoo/framework --no-save --no-package-lock
 
       - name: Build
         run:  npx qx deploy --out=./html  --clean --source-maps

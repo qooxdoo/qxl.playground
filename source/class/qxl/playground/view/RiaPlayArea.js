@@ -1,4 +1,3 @@
-
 /* ************************************************************************
 
    qooxdoo - the new era of web development
@@ -19,15 +18,13 @@
 /**
  * Widget responsible for hosting the run code.
  */
-qx.Class.define("qxl.playground.view.RiaPlayArea",
-{
-  extend : qx.ui.container.Composite,
+qx.Class.define("qxl.playground.view.RiaPlayArea", {
+  extend: qx.ui.container.Composite,
 
-
-  construct : function() {
+  construct() {
     var layout = new qx.ui.layout.VBox();
     layout.setSeparator("separator-vertical");
-    this.base(arguments, layout);
+    super(layout);
     this.setDecorator("main");
 
     // caption
@@ -37,10 +34,10 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
 
     // caption label
     this.__captionLabel = new qx.ui.basic.Label().set({
-      font       : "bold",
-      padding    : 7,
-      allowGrowX : true,
-      allowGrowY : true
+      font: "bold",
+      padding: 7,
+      allowGrowX: true,
+      allowGrowY: true,
     });
 
     // button for max / min the play area
@@ -51,26 +48,30 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
     maxButton.setMargin(6);
     maxButton.setMinHeight(21);
     maxButton.setToolTipText(this.tr("Maximize"));
-    maxButton.addListener("execute", function() {
-      // toggle the icons
-      if (maxButton.getIcon() == maxIcon) {
-        maxButton.setIcon(restoreIcon);
-        maxButton.setToolTipText(this.tr("Restore"));
-      } else {
-        maxButton.setIcon(maxIcon);
-        maxButton.setToolTipText(this.tr("Maximize"));
-      }
-      this.fireEvent("toggleMaximize");
-    }, this);
+    maxButton.addListener(
+      "execute",
+      function () {
+        // toggle the icons
+        if (maxButton.getIcon() == maxIcon) {
+          maxButton.setIcon(restoreIcon);
+          maxButton.setToolTipText(this.tr("Restore"));
+        } else {
+          maxButton.setIcon(maxIcon);
+          maxButton.setToolTipText(this.tr("Maximize"));
+        }
+        this.fireEvent("toggleMaximize");
+      },
+      this
+    );
 
     // combine all parts for the caption
     this._caption.add(this.__captionLabel);
-    this._caption.add(new qx.ui.core.Spacer(), {flex: 1});
+    this._caption.add(new qx.ui.core.Spacer(), { flex: 1 });
     this._caption.add(maxButton);
     this.add(this._caption);
     this._caption.set({
       minHeight: 32,
-      maxHeight: 32
+      maxHeight: 32,
     });
 
     // playfield
@@ -82,31 +83,27 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
     this._dummy = new qx.ui.core.Widget();
     this.__playField.add(this._dummy);
 
-    this.add(this.__playField, {flex : 1});
+    this.add(this.__playField, { flex: 1 });
   },
 
-
-  events : {
+  events: {
     /** Event to signal the the fields should be maximized / restored. */
-    "toggleMaximize" : "qx.event.type.Event"
+    toggleMaximize: "qx.event.type.Event",
   },
 
-
-  members :
-  {
-    _caption : null,
-    __captionLabel : null,
-    _dummy : null,
-    _playRoot : null,
-    __playField : null,
-    _playApp : null,
-    _initialized : false,
-
+  members: {
+    _caption: null,
+    __captionLabel: null,
+    _dummy: null,
+    _playRoot: null,
+    __playField: null,
+    _playApp: null,
+    _initialized: false,
 
     /**
      * Initializes the playarea.
      */
-    init : function() {
+    init() {
       if (this._initialized) {
         return;
       }
@@ -119,47 +116,53 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
       this._playRoot._setLayout(new qx.ui.layout.Canvas());
 
       var self = this;
-      this._playRoot.getLayoutParent = function() {
- return self.__playField; 
-};
+      this._playRoot.getLayoutParent = function () {
+        return self.__playField;
+      };
       this.__playField.getChildren = this.__playField._getChildren =
-        function() {
- return [self._playRoot]; 
-};
+        function () {
+          return [self._playRoot];
+        };
 
       // copy the initial size which is availbale due to the flush at the beginning
       this._playRoot.setMinWidth(this.__playField.getBounds().width);
       this._playRoot.setMinHeight(this.__playField.getBounds().height);
 
-      this.__playField.addListener("resize", function(e) {
-        var data = e.getData();
-        this._playRoot.setMinWidth(data.width);
-        this._playRoot.setMinHeight(data.height);
-      }, this);
+      this.__playField.addListener(
+        "resize",
+        function (e) {
+          var data = e.getData();
+          this._playRoot.setMinWidth(data.width);
+          this._playRoot.setMinHeight(data.height);
+        },
+        this
+      );
 
       this._playApp = new qx.application.Standalone();
-      this._playApp.getRoot = function() {
+      this._playApp.getRoot = function () {
         return self._playRoot;
       };
 
-      this._playRoot.addListener("resize", function(e) {
-        var data = e.getData();
-        this._dummy.setMinWidth(data.width);
-        this._dummy.setMinHeight(data.height);
-      }, this);
+      this._playRoot.addListener(
+        "resize",
+        function (e) {
+          var data = e.getData();
+          this._dummy.setMinWidth(data.width);
+          this._dummy.setMinHeight(data.height);
+        },
+        this
+      );
 
       this._initialized = true;
     },
-
 
     /**
      * Sets the caption of the playarea to the given text.
      * @param text {String} The new text of the caption.
      */
-    updateCaption : function(text) {
+    updateCaption(text) {
       this.__captionLabel.setValue(text);
     },
-
 
     /**
      * Disposes the objects added in the playarea.
@@ -179,7 +182,7 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
      *   the application
      * @param code {String} The code of the application as string.
      */
-    reset : function(beforeReg, afterReg, code) {
+    reset(beforeReg, afterReg, code) {
       if (!this._initialized) {
         return;
       }
@@ -220,17 +223,14 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
       }
     },
 
-
     /**
      * Returns the used application.
      * @return {qx.application.Standalone} A clone of the playground app.
      */
-    getApp : function() {
+    getApp() {
       return this._playApp;
-    }
+    },
   },
-
-
 
   /*
    *****************************************************************************
@@ -238,9 +238,13 @@ qx.Class.define("qxl.playground.view.RiaPlayArea",
    *****************************************************************************
    */
 
-  destruct : function() {
+  destruct() {
     this._disposeObjects(
-      "__captionLabel", "__playField", "_dummy", "_playRoot", "_playApp"
+      "__captionLabel",
+      "__playField",
+      "_dummy",
+      "_playRoot",
+      "_playApp"
     );
-  }
+  },
 });

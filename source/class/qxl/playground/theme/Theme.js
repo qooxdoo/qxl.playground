@@ -18,14 +18,12 @@
 /**
  * Playgrounds default theme, mostly the indigo theme.
  */
-qx.Theme.define("qxl.playground.theme.Theme",
-{
-  meta :
-  {
-    color : qx.theme.indigo.Color,
-    decoration : qxl.playground.theme.Decoration,
-    font : qxl.playground.theme.Font,
-    appearance : qxl.playground.theme.Appearance,
-    icon : qx.theme.icon.Tango
-  }
+qx.Theme.define("qxl.playground.theme.Theme", {
+  meta: {
+    color: qx.theme.indigo.Color,
+    decoration: qxl.playground.theme.Decoration,
+    font: qxl.playground.theme.Font,
+    appearance: qxl.playground.theme.Appearance,
+    icon: qx.theme.icon.Tango,
+  },
 });

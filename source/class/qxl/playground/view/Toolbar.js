@@ -29,48 +29,64 @@
  *  @asset(qx/icon/${qx.icontheme}/22/actions/help-about.png)
  *  @asset(qx/icon/${qx.icontheme}/22/actions/application-exit.png)
  *  @asset(qx/icon/${qx.icontheme}/22/actions/media-seek-forward.png)
-*/
-qx.Class.define("qxl.playground.view.Toolbar",
-{
-  extend : qx.ui.toolbar.ToolBar,
+ */
+qx.Class.define("qxl.playground.view.Toolbar", {
+  extend: qx.ui.toolbar.ToolBar,
 
-
-  construct : function() {
-    this.base(arguments);
+  construct() {
+    super();
 
     this.__menuItemStore = {};
 
     // run button
     var runButton = new qx.ui.toolbar.Button(
-      this.tr("Run"), "icon/22/actions/media-playback-start.png"
+      this.tr("Run"),
+      "icon/22/actions/media-playback-start.png"
     );
+
     this.add(runButton);
     runButton.setToolTipText(this.tr("Run the source code"));
-    runButton.addListener("execute", function() {
-      this.fireEvent("run");
-    }, this);
+    runButton.addListener(
+      "execute",
+      function () {
+        this.fireEvent("run");
+      },
+      this
+    );
 
     // sample button
     this.__samplesCheckButton = new qx.ui.form.ToggleButton(
-      this.tr("Samples"), "icon/22/actions/edit-copy.png"
+      this.tr("Samples"),
+      "icon/22/actions/edit-copy.png"
     );
+
     this.__samplesCheckButton.setValue(true);
     this.add(this.__samplesCheckButton);
     this.__samplesCheckButton.setToolTipText(this.tr("Show samples"));
     this.__samplesCheckButton.setAppearance("toolbar-button");
-    this.__samplesCheckButton.addListener("changeValue", function(e) {
-      this.fireDataEvent("changeSample", e.getData(), e.getOldData());
-    }, this);
+    this.__samplesCheckButton.addListener(
+      "changeValue",
+      function (e) {
+        this.fireDataEvent("changeSample", e.getData(), e.getOldData());
+      },
+      this
+    );
 
     // highlighting button
     this.__highlightButton = new qx.ui.form.ToggleButton(
-      this.tr("Syntax Highlighting"), "icon/22/actions/check-spelling.png"
+      this.tr("Syntax Highlighting"),
+      "icon/22/actions/check-spelling.png"
     );
+
     this.add(this.__highlightButton);
     this.__highlightButton.setAppearance("toolbar-button");
-    this.__highlightButton.addListener("changeValue", function(e) {
-      this.fireDataEvent("changeHighlight", e.getData(), e.getOldData());
-    }, this);
+    this.__highlightButton.addListener(
+      "changeValue",
+      function (e) {
+        this.fireDataEvent("changeHighlight", e.getData(), e.getOldData());
+      },
+      this
+    );
     var initValue = qx.bom.Cookie.get("playgroundHighlight") !== "false";
     this.__highlightButton.setValue(initValue);
 
@@ -79,53 +95,85 @@ qx.Class.define("qxl.playground.view.Toolbar",
 
     // log Check button
     this.__logCheckButton = new qx.ui.toolbar.CheckBox(
-      this.tr("Log"), "icon/22/apps/utilities-log-viewer.png"
+      this.tr("Log"),
+      "icon/22/apps/utilities-log-viewer.png"
     );
+
     this.add(this.__logCheckButton);
     this.__logCheckButton.setToolTipText(this.tr("Show log output"));
-    this.__logCheckButton.addListener("changeValue", function(e) {
-      this.fireDataEvent("changeLog", e.getData(), e.getOldData());
-    }, this);
+    this.__logCheckButton.addListener(
+      "changeValue",
+      function (e) {
+        this.fireDataEvent("changeLog", e.getData(), e.getOldData());
+      },
+      this
+    );
 
     // url shortening button
     var urlShortButton = new qx.ui.toolbar.Button(
-      this.tr("Shorten URL"), "icon/22/actions/bookmark-new.png"
+      this.tr("Shorten URL"),
+      "icon/22/actions/bookmark-new.png"
     );
+
     this.add(urlShortButton);
     urlShortButton.setToolTipText(this.tr("Use tinyurl to shorten the url."));
-    urlShortButton.addListener("execute", function() {
-      this.fireEvent("shortenUrl");
-    }, this);
+    urlShortButton.addListener(
+      "execute",
+      function () {
+        this.fireEvent("shortenUrl");
+      },
+      this
+    );
 
     // api button
     var apiButton = new qx.ui.toolbar.Button(
-      this.tr("API Viewer"), "icon/22/actions/help-contents.png"
+      this.tr("API Viewer"),
+      "icon/22/actions/help-contents.png"
     );
+
     this.add(apiButton);
     apiButton.setToolTipText(this.tr("Open the qooxdoo API Viewer"));
-    apiButton.addListener("execute", function() {
-      this.fireEvent("openApi");
-    }, this);
+    apiButton.addListener(
+      "execute",
+      function () {
+        this.fireEvent("openApi");
+      },
+      this
+    );
 
     // help button
     var helpButton = new qx.ui.toolbar.Button(
-      this.tr("Manual"), "icon/22/actions/help-about.png"
+      this.tr("Manual"),
+      "icon/22/actions/help-about.png"
     );
+
     this.add(helpButton);
     helpButton.setToolTipText(this.tr("Open the qooxdoo Manual"));
-    helpButton.addListener("execute", function() {
-      this.fireEvent("openManual");
-    }, this);
+    helpButton.addListener(
+      "execute",
+      function () {
+        this.fireEvent("openManual");
+      },
+      this
+    );
 
     // demobrowser button
     var demoBrowserButton = new qx.ui.toolbar.Button(
-      this.tr("Widget Browser"), "icon/22/actions/application-exit.png"
+      this.tr("Widget Browser"),
+      "icon/22/actions/application-exit.png"
     );
+
     this.add(demoBrowserButton);
-    demoBrowserButton.setToolTipText(this.tr("Open the qooxdoo Widget Browser"));
-    demoBrowserButton.addListener("execute", function() {
-      this.fireEvent("openDemoBrowser");
-    }, this);
+    demoBrowserButton.setToolTipText(
+      this.tr("Open the qooxdoo Widget Browser")
+    );
+    demoBrowserButton.addListener(
+      "execute",
+      function () {
+        this.fireEvent("openDemoBrowser");
+      },
+      this
+    );
 
     // enable doverflow handling
     this.setOverflowHandling(true);
@@ -140,7 +188,10 @@ qx.Class.define("qxl.playground.view.Toolbar",
     this.setRemovePriority(urlShortButton, 1);
 
     // add a button for overflow handling
-    var chevron = new qx.ui.toolbar.MenuButton(null, "icon/22/actions/media-seek-forward.png");
+    var chevron = new qx.ui.toolbar.MenuButton(
+      null,
+      "icon/22/actions/media-seek-forward.png"
+    );
     chevron.setAppearance("toolbar-button"); // hide the down arrow icon
     this.add(chevron);
     this.setOverflowIndicator(chevron);
@@ -150,115 +201,116 @@ qx.Class.define("qxl.playground.view.Toolbar",
     chevron.setMenu(this.__overflowMenu);
 
     // add the listener
-    this.addListener("hideItem", function(e) {
-      var item = e.getData();
-      var menuItem = this._getMenuItem(item);
-      menuItem.setVisibility("visible");
-      // menus
-      if (item.getMenu && item.getMenu()) {
-        var menu = item.getMenu();
-        item.setMenu(null);
-        menuItem.setMenu(menu);
-      }
-    }, this);
+    this.addListener(
+      "hideItem",
+      function (e) {
+        var item = e.getData();
+        var menuItem = this._getMenuItem(item);
+        menuItem.setVisibility("visible");
+        // menus
+        if (item.getMenu && item.getMenu()) {
+          var menu = item.getMenu();
+          item.setMenu(null);
+          menuItem.setMenu(menu);
+        }
+      },
+      this
+    );
 
-    this.addListener("showItem", function(e) {
-      var item = e.getData();
-      var menuItem = this._getMenuItem(item);
-      menuItem.setVisibility("excluded");
-      // menus
-      if (menuItem.getMenu()) {
-        var menu = menuItem.getMenu();
-        menuItem.setMenu(null);
-        item.setMenu(menu);
-      }
-    }, this);
+    this.addListener(
+      "showItem",
+      function (e) {
+        var item = e.getData();
+        var menuItem = this._getMenuItem(item);
+        menuItem.setVisibility("excluded");
+        // menus
+        if (menuItem.getMenu()) {
+          var menu = menuItem.getMenu();
+          menuItem.setMenu(null);
+          item.setMenu(menu);
+        }
+      },
+      this
+    );
   },
 
-
-  events :
-  {
+  events: {
     /**
      * Fired if the run button is pressed.
      */
-    "run" : "qx.event.type.Event",
+    run: "qx.event.type.Event",
 
     /**
      * Fired if a new sample should be selected. The data contains the name of
      * the new sample.
      */
-    "changeSample" : "qx.event.type.Data",
+    changeSample: "qx.event.type.Data",
 
     /**
      * Data event if the code highlighting should be used.
      */
-    "changeHighlight" : "qx.event.type.Data",
+    changeHighlight: "qx.event.type.Data",
 
     /**
      * Data event if the log should be shown.
      */
-    "changeLog" : "qx.event.type.Data",
+    changeLog: "qx.event.type.Data",
 
     /**
      * Event which will indicate a url shortening action.
      */
-    "shortenUrl" : "qx.event.type.Event",
+    shortenUrl: "qx.event.type.Event",
 
     /**
      * Event which will be fired to open the api.
      */
-    "openApi" : "qx.event.type.Event",
+    openApi: "qx.event.type.Event",
 
     /**
      * Event which will be fired to open the manual.
      */
-    "openManual" : "qx.event.type.Event",
+    openManual: "qx.event.type.Event",
 
     /**
      * Event which will be fired to open the demo browser.
      */
-    "openDemoBrowser" : "qx.event.type.Event"
+    openDemoBrowser: "qx.event.type.Event",
   },
 
-
-  members :
-  {
-    __menuItemStore : null,
-    __overflowMenu : null,
-    __highlightButton : null,
-    __logCheckButton : null,
-    __samplesCheckButton : null,
+  members: {
+    __menuItemStore: null,
+    __overflowMenu: null,
+    __highlightButton: null,
+    __logCheckButton: null,
+    __samplesCheckButton: null,
 
     /**
      * Controlls the presed state of the log button.
      * @param show {Boolean} True, if the button should be pressed.
      */
-    showLog : function(show) {
+    showLog(show) {
       this.__logCheckButton.setValue(show);
     },
-
 
     /**
      * Controlls the presed state of the samples button.
      * @param show {Boolean} True, if the button should be pressed.
      */
-    showExamples : function(show) {
+    showExamples(show) {
       this.__samplesCheckButton.setValue(show);
     },
-
 
     /**
      * Controlls the enabled property of the highlight button.
      * @param value {Boolean} True, if the button should be enabled.
      */
-    enableHighlighting : function(value) {
+    enableHighlighting(value) {
       this.__highlightButton.setEnabled(value);
       // if the button will be disable, remove the pressed state
       if (!value) {
         this.__highlightButton.setValue(false);
       }
     },
-
 
     /**
      * Helper for the overflow handling. It is responsible for returning a
@@ -267,18 +319,21 @@ qx.Class.define("qxl.playground.view.Toolbar",
      * @param toolbarItem {qx.ui.core.Widget} The toolbar item to look for.
      * @return {qx.ui.core.Widget} The coresponding menu item.
      */
-    _getMenuItem : function(toolbarItem) {
+    _getMenuItem(toolbarItem) {
       var cachedItem = this.__menuItemStore[toolbarItem.toHashCode()];
 
       if (!cachedItem) {
         if (toolbarItem instanceof qx.ui.toolbar.CheckBox) {
           cachedItem = new qx.ui.menu.CheckBox(toolbarItem.getLabel());
         } else {
-          cachedItem = new qx.ui.menu.Button(toolbarItem.getLabel(), toolbarItem.getIcon());
+          cachedItem = new qx.ui.menu.Button(
+            toolbarItem.getLabel(),
+            toolbarItem.getIcon()
+          );
         }
 
         // connect the execute
-        cachedItem.addListener("execute", function() {
+        cachedItem.addListener("execute", function () {
           toolbarItem.execute();
         });
 
@@ -287,9 +342,8 @@ qx.Class.define("qxl.playground.view.Toolbar",
       }
 
       return cachedItem;
-    }
+    },
   },
-
 
   /*
    *****************************************************************************
@@ -297,8 +351,11 @@ qx.Class.define("qxl.playground.view.Toolbar",
    *****************************************************************************
    */
 
-  destruct : function() {
-    this._disposeObjects("__highlightButton", "__logCheckButton",
-    "__overflowMenu");
-  }
+  destruct() {
+    this._disposeObjects(
+      "__highlightButton",
+      "__logCheckButton",
+      "__overflowMenu"
+    );
+  },
 });

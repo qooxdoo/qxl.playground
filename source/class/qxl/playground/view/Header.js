@@ -18,19 +18,22 @@
 /**
  * Application header widget.
  */
-qx.Class.define("qxl.playground.view.Header",
-{
-  extend : qx.ui.container.Composite,
+qx.Class.define("qxl.playground.view.Header", {
+  extend: qx.ui.container.Composite,
 
-  construct : function() {
-    this.base(arguments, new qx.ui.layout.HBox());
+  construct() {
+    super(new qx.ui.layout.HBox());
     this.setAppearance("app-header");
 
     // EVIL HACK
-    this.addListener("appear", function() {
-      var el = this.getContentElement();
-      el.setStyle("top", (parseInt(el.getStyle("top")) + 1) + "px");
-    }, this);
+    this.addListener(
+      "appear",
+      function () {
+        var el = this.getContentElement();
+        el.setStyle("top", parseInt(el.getStyle("top")) + 1 + "px");
+      },
+      this
+    );
     // /////////
 
     var version = new qxl.versionlabel.VersionLabel(this.tr("qooxdoo"));
@@ -39,13 +42,14 @@ qx.Class.define("qxl.playground.view.Header",
     riaButton.set({
       model: "ria",
       appearance: "modeButton",
-      focusable: false
+      focusable: false,
     });
+
     var mobileButton = new qx.ui.form.RadioButton(this.tr("Mobile"));
     mobileButton.set({
       model: "mobile",
       appearance: "modeButton",
-      focusable: false
+      focusable: false,
     });
 
     this.__buttons = [riaButton, mobileButton];
@@ -57,42 +61,38 @@ qx.Class.define("qxl.playground.view.Header",
     this.add(new qx.ui.core.Spacer(30));
     this.add(riaButton);
     this.add(mobileButton);
-    this.add(new qx.ui.core.Spacer(), { flex : 1 });
+    this.add(new qx.ui.core.Spacer(), { flex: 1 });
     this.add(version);
   },
 
-
-  properties : {
+  properties: {
     /** The mode the header should be currently in. */
-    mode : {
-      event : "changeMode",
-      check : "String",
-      init : "RIA",
-      apply : "_applyMode"
-    }
+    mode: {
+      event: "changeMode",
+      check: "String",
+      init: "RIA",
+      apply: "_applyMode",
+    },
   },
 
-
-  members : {
-    __buttons : null,
-    __group : null,
-
+  members: {
+    __buttons: null,
+    __group: null,
 
     // property apply
-    _applyMode : function(value) {
+    _applyMode(value) {
       if (this.__group.getModelSelection().getItem(0) != value) {
         this.__group.setModelSelection([value]);
       }
     },
-
 
     /**
      * Enables or disabled the button for the given mode.
      * @param mode {String} the mode to change the enabled state.
      * @param value {boolean} <code>true</true> if the button should be enabled.
      */
-    setEnabledMode : function(mode, value) {
-      for (var i=0; i < this.__buttons.length; i++) {
+    setEnabledMode(mode, value) {
+      for (var i = 0; i < this.__buttons.length; i++) {
         if (this.__buttons[i].getModel() == mode) {
           var button = this.__buttons[i];
           break;
@@ -102,6 +102,6 @@ qx.Class.define("qxl.playground.view.Header",
       var label = value ? this.tr("Mobile") : this.tr("Mobile (Webkit only)");
       button.setEnabled(value);
       button.setLabel(label);
-    }
-  }
+    },
+  },
 });
