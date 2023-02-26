@@ -23,11 +23,11 @@
 			"exclude": [
 				"qx.tool.*",
 				"qx.module.Blocker",
-				"qx.module.Placement"
+				"qx.module.Placement",
+				"qx.dev.unit.TestLoaderMobile"
 			]
 		}
 	],
-	/** Targets */
 	"targets": [
 		{
 			"type": "source",
